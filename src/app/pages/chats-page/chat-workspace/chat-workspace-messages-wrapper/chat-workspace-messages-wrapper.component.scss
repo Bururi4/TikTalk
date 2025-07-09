@@ -1,0 +1,25 @@
+:host {
+   display: grid;
+   padding: 16px 20px;
+   grid-template-rows: 1fr min-content;
+}
+
+.messages-wrapper {
+   display: grid;
+   grid-gap: 12px;
+   overflow-y: auto;
+   scrollbar-width: none;
+   margin-bottom: 16px;
+   grid-template-rows: min-content;
+}
+
+.day-of-message {
+   display: grid;
+   place-content: center;
+   width: max-content;
+   background: #161616;
+   padding: 6px 31px;
+   justify-self: center;
+   font-family: 'JetBrains Mono SemiBold', sans-serif;
+   font-size: 12px;
+}

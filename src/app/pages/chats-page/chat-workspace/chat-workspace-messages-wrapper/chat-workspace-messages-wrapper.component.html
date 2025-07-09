@@ -1,0 +1,13 @@
+<div class="messages-wrapper">
+   @for (day of messagesByDay() | keyvalue; track day.key) {
+      <div class="day-of-message">
+         {{ day.key }}
+      </div>
+      @for (message of day.value; track message.id) {
+         <app-chat-workspace-message [message]="message"></app-chat-workspace-message>
+      }
+   }
+</div>
+
+<app-post-input (created)="onSendMessage($event)"></app-post-input>
+

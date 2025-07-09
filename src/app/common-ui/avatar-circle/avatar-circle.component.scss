@@ -1,0 +1,15 @@
+.profile-header-image {
+   width: 112px;
+   height: 112px;
+   border-radius: 50%;
+}
+
+:host.size32 {
+   width: 32px;
+   height: 32px;
+
+   img {
+      width: 32px;
+      height: 32px;
+   }
+}

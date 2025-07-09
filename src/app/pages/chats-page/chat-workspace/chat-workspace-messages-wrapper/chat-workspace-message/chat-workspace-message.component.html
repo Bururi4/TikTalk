@@ -1,0 +1,18 @@
+@if (message(); as message) {
+   <app-avatar-circle [avatarUrl]="message.user?.avatarUrl" class="size32"></app-avatar-circle>
+   <div class="message-container">
+      @if (message.isMine) {
+         <div class="mb8 medium-text message-username">
+            <span class="">{{ message.createdAt | date: 'HH:mm' }}</span>
+            {{ message.user?.firstName }} {{ message.user?.lastName }}
+         </div>
+         <div class="message-text message-mine medium-text">{{ message.text }}</div>
+      } @else {
+         <div class="mb8 medium-text message-username">
+            {{ message.user?.firstName }} {{ message.user?.lastName }}
+            <span class="">{{ message.createdAt | date: 'HH:mm' }}</span>
+         </div>
+         <div class="message-text message-companion medium-text">{{ message.text }}</div>
+      }
+   </div>
+}
