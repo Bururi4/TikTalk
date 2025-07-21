@@ -1,0 +1,110 @@
+:host {
+   display: block;
+   padding: 20px 12px;
+   position: relative;
+   background-color: var(--dark-color);
+}
+
+.main-menu {
+   margin-bottom: 20px;
+}
+
+.main-menu-list {
+   display: grid;
+   grid-gap: 8px;
+   list-style: none;
+}
+
+.menu-item {
+   color: var(--light-color);
+   padding: 16px 12px;
+   cursor: pointer;
+   border: none;
+   background: none;
+   display: grid;
+   align-items: center;
+   grid-template-columns: 16px 1fr max-content;
+   grid-gap: 12px;
+   font-family: 'JetBrains Mono SemiBold', sans-serif;
+   font-size: 14px;
+   line-height: 24px;
+   width: 100%;
+   text-align: left;
+   border-radius: 2px;
+   text-decoration: none;
+
+   &.active,
+   &:hover,
+   &:focus-visible {
+      background-color: var(--dark-hover-color);
+      color: var(--primary-color);
+
+      .menu-item svg {
+         color: var(--primary-color);
+      }
+   }
+}
+
+.menu-item svg {
+   width: 16px;
+   height: 16px;
+}
+
+.subs {
+   color: #ffffffbf;
+}
+
+.to-subscribers {
+   display: flex;
+   gap: 10px;
+   align-items: center;
+   cursor: pointer;
+}
+
+.to-subscribers-link {
+   color: var(--primary-color);
+   text-decoration: none;
+}
+
+.to-subscribers-icon {
+   width: 16px;
+   height: 16px;
+   color: var(--primary-color);
+}
+
+.sidebar-footer {
+   background-color: var(--dark-hover-color);
+   border-radius: 2px;
+   padding: 4px 16px;
+   display: grid;
+   grid-template-columns: 32px 1fr 16px;
+   align-items: center;
+   grid-gap: 12px;
+   position: absolute;
+   bottom: 20px;
+   width: calc(100% - 20px);
+}
+
+.footer-image {
+   width: 32px;
+   height: 32px;
+   border-radius: 50%;
+}
+
+.footer-username {
+   font-family: 'JetBrains Mono SemiBold', sans-serif;
+   font-size: 14px;
+   line-height: 24px;
+   color: var(--primary-color);
+}
+
+.settings-btn {
+   width: 14px;
+   height: 14px;
+
+   svg {
+      width: 14px;
+      height: 14px;
+      color: var(--primary-color);
+   }
+}

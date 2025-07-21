@@ -1,0 +1,40 @@
+.login-page {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   height: 100dvh;
+   align-items: center;
+   margin: 0 21%;
+}
+
+.login-form {
+   max-width: 440px;
+}
+
+.form-input {
+   position: relative;
+}
+
+.form-input-button {
+   border: none;
+   background: none;
+   position: absolute;
+   color: #ffffffbf;
+   top: 15px;
+   right: 15px;
+   cursor: pointer;
+}
+
+.form-input-button.active {
+   color: var(--primary-color);
+}
+
+.form-input-icon {
+   position: absolute;
+   right: 15px;
+   top: 15px;
+}
+
+.logo {
+   display: flex;
+   justify-content: end;
+}
