@@ -4,7 +4,7 @@ import {catchError, tap, throwError} from 'rxjs';
 import {TokenResponse} from './auth.interface';
 import {CookieService} from 'ngx-cookie-service';
 import {Router} from '@angular/router';
-import {environment} from "../../../../../apps/tik-talk/src/app/common-ui/environments/environment";
+import { environment } from '@tt/common-ui';
 
 @Injectable({
    providedIn: 'root',

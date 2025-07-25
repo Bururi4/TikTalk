@@ -1,9 +1,7 @@
 import { Component, input } from '@angular/core';
 import { PostComment } from '../../data';
 import { DatePipe } from '@angular/common';
-import {
-   AvatarCircleComponent
-} from "../../../../../../apps/tik-talk/src/app/common-ui/avatar-circle/avatar-circle.component";
+import { AvatarCircleComponent } from '@tt/common-ui';
 
 @Component({
    selector: 'app-comment',

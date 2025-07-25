@@ -1,15 +1,10 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { Post, PostComment } from '../../data';
-import { PostInputComponent } from '../../ui/post-input/post-input.component';
-import { CommentComponent } from '../../ui/comment/comment.component';
+import { PostInputComponent, CommentComponent } from '../../ui';
 import { PostService } from '../../data';
 import { firstValueFrom } from 'rxjs';
-import {ProfileService} from "../../../../../../apps/tik-talk/src/app/data/services/profile.service";
-import {CustomDatePipe} from "../../../../../../apps/tik-talk/src/app/helpers/pipes/custom-date.pipe";
-import {SvgComponent} from "../../../../../../apps/tik-talk/src/app/common-ui/svg/svg.component";
-import {
-   AvatarCircleComponent
-} from "../../../../../../apps/tik-talk/src/app/common-ui/avatar-circle/avatar-circle.component";
+import { AvatarCircleComponent, CustomDatePipe, SvgComponent } from '@tt/common-ui';
+import { GlobalStoreService } from '@tt/shared';
 
 @Component({
    selector: 'app-post',
@@ -24,10 +19,10 @@ import {
    templateUrl: './post.component.html',
    styleUrl: './post.component.scss',
 })
-   export class PostComponent implements OnInit {
+export class PostComponent implements OnInit {
    post = input<Post>();
    comments = signal<PostComment[]>([]);
-   profile = inject(ProfileService).me;
+   profile = inject(GlobalStoreService).me;
 
    postService = inject(PostService);
 

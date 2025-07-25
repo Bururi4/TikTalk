@@ -7,7 +7,7 @@ import {
    PostComment,
 } from '../interfaces/post.interface';
 import { map, switchMap, tap } from 'rxjs';
-import { environment } from '../../../../../../apps/tik-talk/src/app/common-ui/environments/environment';
+import { environment } from '@tt/common-ui';
 
 @Injectable({
    providedIn: 'root',

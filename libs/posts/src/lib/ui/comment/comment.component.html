@@ -6,10 +6,10 @@
    <header class="comment-header">
       <span class="medium-text">{{ comment.author.username }}</span>
       <span class="medium-text">{{
-         comment.createdAt | date : 'dd.MM.YYYY'
+         comment.createdAt | date : 'hh:mm dd.MM.YYYY'
       }}</span>
    </header>
-   <div class="comment-text">
+   <div class="medium-text">
       {{ comment.text }}
    </div>
 </div>

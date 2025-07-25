@@ -3,21 +3,16 @@ import {
    Component,
    DestroyRef,
    ElementRef,
-   EventEmitter,
    HostListener,
    inject,
-   input,
    Input,
-   Output,
    Renderer2,
 } from '@angular/core';
-import { PostInputComponent } from '../../ui/post-input/post-input.component';
-import { PostComponent } from '../post/post.component';
 import { PostService } from '../../data';
-import { firstValueFrom, fromEvent, throttleTime } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {ProfileService} from "../../../../../../apps/tik-talk/src/app/data/services/profile.service";
-import {Optimization} from "../../../../../../apps/tik-talk/src/app/helpers/decorators/resize";
+import { firstValueFrom } from 'rxjs';
+import { PostInputComponent } from '../../ui';
+import { GlobalStoreService, Optimization } from '@tt/shared';
+import { PostComponent } from '../post/post.component';
 
 @Component({
    selector: 'app-post-feed',
@@ -32,10 +27,9 @@ export class PostFeedComponent implements AfterViewInit {
    r2 = inject(Renderer2);
    feed = inject(PostService).posts;
    destroyRef = inject(DestroyRef);
-
-   profile = inject(ProfileService).me;
-   @Input() isCommentInput: boolean = false;
-   @Input() postId: number = 0;
+   profile = inject(GlobalStoreService).me;
+   @Input() isCommentInput = false;
+   @Input() postId = 0;
 
    @HostListener('window:resize')
    @Optimization(200)

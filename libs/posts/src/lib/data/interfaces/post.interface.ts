@@ -1,4 +1,4 @@
-import { Profile } from '../../../../../../apps/tik-talk/src/app/data/interfaces/profile.interface';
+import { Profile } from '@tt/interfaces/profile';
 
 export interface PostCreateDto {
    title: string;

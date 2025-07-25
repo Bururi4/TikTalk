@@ -8,11 +8,10 @@ import {
    Output,
    Renderer2,
 } from '@angular/core';
-import { AvatarCircleComponent } from '../../../common-ui/avatar-circle/avatar-circle.component';
-import { ProfileService } from '../../../data/services/profile.service';
-import { SvgComponent } from '../../../common-ui/svg/svg.component';
-import { PostService } from '../../../data/services/post.service';
+import { PostService } from '../../data';
 import { FormsModule } from '@angular/forms';
+import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
+import { GlobalStoreService } from '@tt/shared';
 
 @Component({
    selector: 'app-post-input',
@@ -23,13 +22,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class PostInputComponent {
    r2 = inject(Renderer2);
-   profile = inject(ProfileService).me;
    postService = inject(PostService);
+   profile = inject(GlobalStoreService).me;
    postText = '';
    isCommentInput = input(false);
    postId = input<number>(0);
 
-   @Input() placeholder: string = 'Напишите что-нибудь';
+   @Input() placeholder = 'Напишите что-нибудь';
    @Output() created = new EventEmitter<string>();
 
    @HostBinding('class.comment')
