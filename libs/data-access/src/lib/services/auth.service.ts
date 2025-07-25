@@ -1,17 +1,16 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {catchError, tap, throwError} from 'rxjs';
-import {TokenResponse} from './auth.interface';
-import {CookieService} from 'ngx-cookie-service';
-import {Router} from '@angular/router';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, tap, throwError } from 'rxjs';
+import { TokenResponse } from '../interfaces/auth.interface';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 import { environment } from '@tt/common-ui';
 
 @Injectable({
    providedIn: 'root',
 })
 export class AuthService {
-   constructor(private http: HttpClient, private router: Router) {
-   }
+   constructor(private http: HttpClient, private router: Router) {}
 
    accessToken: string | null = null;
    refreshToken: string | null = null;

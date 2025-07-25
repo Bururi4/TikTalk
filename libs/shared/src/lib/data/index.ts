@@ -1,9 +1,4 @@
 import { Optimization } from './decorators/resize';
-import { GlobalStoreService } from './services/global-store.service';
-import { Pageable } from './interfaces/pageable.interface';
+import { Pageable } from '@tt/data-access';
 
-export {
-   Pageable,
-   Optimization,
-   GlobalStoreService
-}
+export { Pageable, Optimization };

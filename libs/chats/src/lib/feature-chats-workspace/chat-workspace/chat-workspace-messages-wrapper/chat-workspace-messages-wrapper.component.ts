@@ -10,8 +10,8 @@ import {
    Renderer2,
 } from '@angular/core';
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
-import { ChatsService } from '../../../data/services/chats.service';
-import { Chat, Message } from '../../../data/interfaces/chats.interface';
+import { ChatsService } from '@tt/data-access';
+import { Chat, Message } from '@tt/data-access';
 import {
    debounceTime,
    firstValueFrom,

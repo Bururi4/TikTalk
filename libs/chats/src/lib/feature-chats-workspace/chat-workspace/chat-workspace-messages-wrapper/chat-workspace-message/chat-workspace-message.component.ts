@@ -1,5 +1,5 @@
 import { Component, HostBinding, input } from '@angular/core';
-import { Message } from '../../../../data/interfaces/chats.interface';
+import { Message } from '@tt/data-access';
 import { DatePipe } from '@angular/common';
 import { AvatarCircleComponent } from '@tt/common-ui';
 

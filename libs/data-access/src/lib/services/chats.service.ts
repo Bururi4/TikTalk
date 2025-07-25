@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Chat, LastMessageRes, Message } from '../interfaces/chats.interface';
 import { map } from 'rxjs';
 import { environment } from '@tt/common-ui';
-import { GlobalStoreService } from '@tt/shared';
+import { GlobalStoreService } from './global-store.service';
 
 @Injectable({
    providedIn: 'root',

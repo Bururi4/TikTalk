@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { ProfileCardComponent, ProfileService, ProfileFiltersComponent } from '@tt/profile';
+import { ProfileService } from '@tt/data-access';
+import { ProfileCardComponent } from '../../ui/profile-card/profile-card.component';
+import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
 
 @Component({
    selector: 'app-search-page',
@@ -11,5 +13,7 @@ import { ProfileCardComponent, ProfileService, ProfileFiltersComponent } from '@
 export class SearchPageComponent {
    profiles = this.profileService.filteredProfiles;
 
-   constructor(private profileService: ProfileService) {}
+   constructor(private profileService: ProfileService) {
+
+   }
 }

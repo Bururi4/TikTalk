@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Profile } from '@tt/interfaces/profile';
+import { Profile } from '@tt/data-access';
 import { AvatarCircleComponent, ImgUrlPipe } from '@tt/common-ui';
 
 @Component({

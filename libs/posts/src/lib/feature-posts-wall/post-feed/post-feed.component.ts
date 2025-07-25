@@ -8,10 +8,10 @@ import {
    Input,
    Renderer2,
 } from '@angular/core';
-import { PostService } from '../../data';
+import { PostService, GlobalStoreService } from '@tt/data-access';
 import { firstValueFrom } from 'rxjs';
 import { PostInputComponent } from '../../ui';
-import { GlobalStoreService, Optimization } from '@tt/shared';
+import { Optimization } from '@tt/shared';
 import { PostComponent } from '../post/post.component';
 
 @Component({

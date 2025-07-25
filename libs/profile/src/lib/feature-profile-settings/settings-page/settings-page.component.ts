@@ -1,12 +1,14 @@
 import { Component, effect, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProfileService, ProfileHeaderComponent, AvatarUploadComponent } from '@tt/profile';
 import { firstValueFrom } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SvgComponent } from '@tt/common-ui';
-import { StackInputComponent } from '../../../../../chats/src/lib/ui/stack-input/stack-input.component';
+import { StackInputComponent } from '@tt/chats';
+import { AvatarUploadComponent } from '../../ui/avatar-upload/avatar-upload.component';
+import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
+import { ProfileService } from '@tt/data-access';
 
 @Component({
    selector: 'app-settings-page',

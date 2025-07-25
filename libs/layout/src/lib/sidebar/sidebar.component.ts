@@ -4,7 +4,7 @@ import { SubCardComponent } from './sub-card/sub-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ImgUrlPipe, SvgComponent } from '@tt/common-ui';
-import { ProfileService } from '@tt/profile';
+import { ProfileService } from '@tt/data-access';
 
 @Component({
    selector: 'app-sidebar',

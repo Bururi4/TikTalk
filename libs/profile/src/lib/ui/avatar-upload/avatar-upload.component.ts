@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProfileService } from '../../data/services/profile.service';
+import { ProfileService } from '@tt/data-access';
 import { SvgComponent, DndDirective, ImgUrlPipe } from '@tt/common-ui';
 
 @Component({
