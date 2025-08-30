@@ -5,7 +5,8 @@
 
 <textarea
    [(ngModel)]="postText"
-   class="hidden-textarea"
+   class="post-input-textarea"
+   type="text"
    (input)="onTextAreaInput($event)"
    [placeholder]="placeholder"
 ></textarea>

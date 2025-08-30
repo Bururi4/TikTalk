@@ -3,7 +3,7 @@ import { Profile } from './profile.interface';
 export interface PostCreateDto {
    title: string;
    content: string;
-   authorId: number;
+   authorId: number | undefined;
 }
 
 export interface Post {

@@ -1,6 +1,8 @@
-@if (profile$ | async; as profile) {
-<profile-header [profile]="profile"></profile-header>
-}
+<div class="settings-preview">
+   @if (profile$ | async; as profile) {
+      <profile-header [profile]="profile" class="settings-preview-header"></profile-header>
+   }
+</div>
 
 <form class="profile-form-wrapper" [formGroup]="form">
    <div class="profile-form">
@@ -25,7 +27,7 @@
 
       <label class="tt-form-label">
          <span class="tt-form-label-text">Telegram username</span>
-         <input type="text" class="tt-form-input" formControlName="username" />
+         <input type="text" class="tt-form-input" formControlName="username"/>
       </label>
       <label class="tt-form-label">
          <span class="tt-form-label-text">О себе</span>

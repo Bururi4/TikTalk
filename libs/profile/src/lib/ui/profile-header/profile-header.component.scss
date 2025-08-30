@@ -1,12 +1,6 @@
 :host {
-   display: flex;
-   gap: 24px;
-   max-height: 146px;
+   display: grid;
+   grid-template-columns: var(--circle-avatar-size, 140px) 1fr;
+   grid-gap: 24px;
    align-items: center;
-}
-
-.firstname-and-username {
-}
-
-.profile-name {
 }

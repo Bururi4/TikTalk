@@ -5,7 +5,7 @@ import { AvatarCircleComponent, ImgUrlPipe } from '@tt/common-ui';
 @Component({
    selector: 'profile-header',
    standalone: true,
-   imports: [ImgUrlPipe, AvatarCircleComponent],
+   imports: [ AvatarCircleComponent],
    templateUrl: './profile-header.component.html',
    styleUrl: './profile-header.component.scss',
 })

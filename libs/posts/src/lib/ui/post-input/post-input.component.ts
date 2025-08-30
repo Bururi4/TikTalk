@@ -8,10 +8,13 @@ import {
    Output,
    Renderer2,
 } from '@angular/core';
-import { PostService } from '@tt/data-access';
 import { FormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
-import { GlobalStoreService } from '@tt/data-access';
+import {
+   CommentCreateDto,
+   PostCreateDto, Profile,
+   ProfileService
+} from '@tt/data-access';
 
 @Component({
    selector: 'app-post-input',
@@ -22,14 +25,16 @@ import { GlobalStoreService } from '@tt/data-access';
 })
 export class PostInputComponent {
    r2 = inject(Renderer2);
-   postService = inject(PostService);
-   profile = inject(GlobalStoreService).me;
    postText = '';
    isCommentInput = input(false);
    postId = input<number>(0);
+   profileService = inject(ProfileService);
+   profile = this.profileService.me;
+   me = input<Profile>();
 
    @Input() placeholder = 'Напишите что-нибудь';
-   @Output() created = new EventEmitter<string>();
+   @Output() createdPost = new EventEmitter<PostCreateDto>();
+   @Output() createdComment = new EventEmitter<CommentCreateDto>();
 
    @HostBinding('class.comment')
    get isComment() {
@@ -44,7 +49,23 @@ export class PostInputComponent {
 
    sendPost() {
       if (!this.postText) return;
-      this.created.emit(this.postText);
+
+      if (this.isCommentInput()) {
+         this.createdComment.emit({
+            text: this.postText,
+            authorId: this.profile()!.id,
+            postId: this.postId(),
+         });
+         this.postText = '';
+         return;
+      }
+
+      this.createdPost.emit({
+         title: 'postTitle',
+         content: this.postText,
+         authorId: this.profile()!.id,
+      });
       this.postText = '';
+      return;
    }
 }

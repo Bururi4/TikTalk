@@ -1,9 +1,9 @@
-@if (avatarUrl(); as avatarUrl) { @if (avatarUrl) {
-<img [src]="avatarUrl | imgUrl" alt="avatar" class="profile-header-image" />
+@if (avatarUrl(); as avatarUrl) {
+   <img [src]="avatarUrl | imgUrl" alt="avatar" class="profile-header-image"/>
 } @else {
-<img
-   src="/assets/images/avatar-placeholder.png"
-   alt="avatar"
-   class="profile-header-image"
-/>
-} }
+   <img
+      src="/assets/images/avatar-placeholder.png"
+      alt="avatar"
+      class="profile-header-image"
+   />
+}

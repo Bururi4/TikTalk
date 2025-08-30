@@ -2,7 +2,18 @@
    display: grid;
    grid-template-columns: 1fr 350px;
    align-items: center;
-   padding: 24px;
+   padding-bottom: 24px;
+}
+
+.profile-page-header-body {
+   .profile-header-image {
+      width: 140px;
+      height: 140px;
+   }
+}
+
+.profile-btn {
+   margin-left: 24px;
 }
 
 .to-setting-btn {
@@ -11,7 +22,7 @@
    display: flex;
    align-items: center;
    gap: 8px;
-   justify-content: center
+   justify-content: center;
 }
 
 .to-setting-icon {
@@ -24,7 +35,15 @@
    display: grid;
    grid-gap: 64px;
    grid-template-columns: 1fr 350px;
-   padding: 24px;
+   padding-top: 24px;
+
+   .profile-page-posts {
+      min-width: min-content;
+   }
+
+   .profile-page-sidebar {
+      padding: 0 24px;
+   }
 }
 
 .subscribers-wrapper {

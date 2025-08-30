@@ -1,34 +1,38 @@
 @if (post(); as post) {
-<app-avatar-circle
-   [avatarUrl]="post.author.avatarUrl"
-   class="size32"
-></app-avatar-circle>
+   <app-avatar-circle
+      [avatarUrl]="post.author.avatarUrl"
+      class="size32"
+   ></app-avatar-circle>
 
-<main class="post-body">
-   <div class="post-header">
-      <strong class="post-author">
-         {{ post.author.firstName }} {{ post.author.lastName }}
-         <span class="post-created-at">{{ post.createdAt | customDate }}</span>
-      </strong>
-   </div>
-   <p class="medium-text">{{ post.content }}</p>
+   <main class="post-body">
+      <div class="post-header">
+         <strong class="post-author">
+            {{ post.author.firstName }} {{ post.author.lastName }}
+            <span class="post-created-at">{{ post.createdAt | date: 'dd.MM.YYYY в hh:mm' }}</span>
+         </strong>
+      </div>
 
-   <div class="post-counters">
+      <p class="medium-text">{{ post.content }}</p>
+
+      <div class="post-counters">
       <span class="comment-amount">
          <svg icon="comment" class="svg16"></svg>
-         <span class="comments-length">{{ comments().length }}</span>
+         <span class="comments-length">{{ comments()!.length }}</span>
       </span>
-   </div>
-   <div class="post-comment-wrapper">
-      @for (comment of comments(); track comment.id) {
-      <app-comment [comment]="comment"></app-comment>
-      }
-   </div>
-   <app-post-input
-      [isCommentInput]="true"
-      [postId]="post.id"
-      (created)="onCreated($event)"
-      [placeholder]="'Напишите комментарий'"
-   ></app-post-input>
-</main>
+      </div>
+
+      <div class="post-comment-wrapper">
+         @for (comment of comments(); track comment.id) {
+            <app-comment [comment]="comment"></app-comment>
+         }
+      </div>
+
+      <app-post-input
+         [isCommentInput]="true"
+         [postId]="post.id"
+         [me]="me()"
+         (createdComment)="createComment($event)"
+         [placeholder]="'Напишите комментарий'"
+      ></app-post-input>
+   </main>
 }

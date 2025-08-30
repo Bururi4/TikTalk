@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import {
    CommentCreateDto,
    Post,
-   PostCreateDto,
    PostComment,
+   PostCreateDto,
 } from '../interfaces/post.interface';
-import { map, switchMap, tap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 import { environment } from '@tt/common-ui';
 
 @Injectable({
@@ -25,14 +25,24 @@ export class PostService {
       );
    }
 
+   getPostsByUser(userId: number) {
+      return this.http.get<Post[]>(`${environment.url}post/`, {
+         params: { user_id: userId },
+      });
+   }
+
    fetchPosts() {
-      return this.http
-         .get<Post[]>(`${environment.url}post/`)
-         .pipe(tap((res) => this.posts.set(res)));
+      return this.http.get<Post[]>(`${environment.url}post/`);
    }
 
    createComment(payload: CommentCreateDto) {
-      return this.http.post<PostComment>(`${environment.url}comment/`, payload);
+      return this.http
+         .post<PostComment>(`${environment.url}comment/`, payload)
+         .pipe(
+            switchMap(() => {
+               return this.fetchPosts();
+            })
+         );
    }
 
    getCommentByPostId(postId: number) {

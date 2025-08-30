@@ -9,11 +9,9 @@ import { GlobalStoreService } from './global-store.service';
    providedIn: 'root',
 })
 export class ProfileService {
-   constructor(private http: HttpClient) {}
-
    me = signal<Profile | null>(null);
    #globalStoreService = inject(GlobalStoreService);
-   filteredProfiles = signal<Profile[]>([]);
+   http = inject(HttpClient);
 
    getTestAccounts() {
       return this.http.get<Profile[]>(
@@ -58,6 +56,5 @@ export class ProfileService {
          .get<Pageable<Profile>>(`${environment.url}account/accounts`, {
             params,
          })
-         .pipe(tap((res) => this.filteredProfiles.set(res.items)));
    }
 }

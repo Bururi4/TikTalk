@@ -1,6 +1,6 @@
 :host {
    display: grid;
-   padding: 16px;
+   padding: 16px 22px;
    background: var(--dark-color);
    border: 1px solid var(--light-color);
    grid-template-columns: 32px 1fr 44px;
@@ -14,14 +14,15 @@
    border-radius: 2px;
 }
 
-.hidden-textarea {
-   resize: none;
-   background: var(--dark-color);
-   border: none;
-   color: var(--light-color);
+.post-input-textarea {
    font-size: 14px;
-   line-height: 21px;
    font-family: 'JetBrains Mono Medium', sans-serif;
+   line-height: 21px;
+   align-content: center;
+   border: none;
+   background: var(--dark-color);
+   color: var(--light-color);
+   resize: none;
 
    &:hover,
    &:focus-visible {

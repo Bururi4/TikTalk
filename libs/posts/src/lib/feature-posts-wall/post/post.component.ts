@@ -1,8 +1,16 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { Post, PostComment, PostService, GlobalStoreService } from '@tt/data-access';
+import {
+   Post,
+   PostComment,
+   GlobalStoreService,
+   CommentCreateDto,
+   Profile,
+} from '@tt/data-access';
 import { PostInputComponent, CommentComponent } from '../../ui';
-import { firstValueFrom } from 'rxjs';
-import { AvatarCircleComponent, CustomDatePipe, SvgComponent } from '@tt/common-ui';
+import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
+import { Store } from '@ngrx/store';
+import { postActions } from '../../data';
+import { DatePipe } from '@angular/common';
 
 @Component({
    selector: 'app-post',
@@ -12,37 +20,20 @@ import { AvatarCircleComponent, CustomDatePipe, SvgComponent } from '@tt/common-
       SvgComponent,
       PostInputComponent,
       CommentComponent,
-      CustomDatePipe,
+      DatePipe,
    ],
    templateUrl: './post.component.html',
    styleUrl: './post.component.scss',
 })
-export class PostComponent implements OnInit {
+export class PostComponent {
    post = input<Post>();
-   comments = signal<PostComment[]>([]);
+   comments = input<PostComment[]>();
+   // comments = signal<PostComment[]>([]);
    profile = inject(GlobalStoreService).me;
+   me = input<Profile>();
+   store = inject(Store);
 
-   postService = inject(PostService);
-
-   async ngOnInit() {
-      this.comments.set(this.post()!.comments);
-   }
-
-   async onCreated(comment: string) {
-      if (!comment) return;
-
-      firstValueFrom(
-         this.postService.createComment({
-            text: comment,
-            authorId: this.profile()!.id,
-            postId: this.post()!.id,
-         })
-      ).then(async () => {
-         const comments = await firstValueFrom(
-            this.postService.getCommentByPostId(this.post()!.id)
-         );
-         this.comments.set(comments);
-      });
-      return;
+   createComment(comment: CommentCreateDto) {
+      this.store.dispatch(postActions.createComment({ comment: comment }));
    }
 }

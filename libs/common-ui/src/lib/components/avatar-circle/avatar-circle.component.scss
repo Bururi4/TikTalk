@@ -1,7 +1,8 @@
 .profile-header-image {
-   width: 112px;
-   height: 112px;
+   height: 100%;
+   width: 100%;
    border-radius: 50%;
+   object-fit: cover;
 }
 
 :host.size32 {

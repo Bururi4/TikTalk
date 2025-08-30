@@ -5,57 +5,33 @@ import { Pipe, PipeTransform } from '@angular/core';
    standalone: true,
 })
 export class CustomDatePipe implements PipeTransform {
-   transform(value: string | Date | null): string {
-      const date = new Date(value + 'Z');
-      const now = new Date();
-      const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+   transform(value: string | null) {
+      const today = new Date(value + 'Z');
+      const newDate = new Date();
+      const dateDifference = newDate.getTime() - today.getTime();
+      let result;
 
-      if (isNaN(seconds)) return '';
-
-      const intervals = {
-         год: 31536000,
-         месяц: 2592000,
-         неделя: 604800,
-         день: 86400,
-         час: 3600,
-         минута: 60,
-         секунда: 1,
-      };
-
-      for (const [unit, unitSeconds] of Object.entries(intervals)) {
-         const interval = Math.floor(seconds / unitSeconds);
-
-         if (interval >= 1) {
-            return this.getPluralForm(interval, unit);
-         }
-      }
-
-      return 'только что';
-   }
-
-   private getPluralForm(count: number, word: string): string {
-      const cases: Record<string, string[]> = {
-         год: ['год', 'года', 'лет'],
-         месяц: ['месяц', 'месяца', 'месяцев'],
-         неделя: ['неделя', 'недели', 'недель'],
-         день: ['день', 'дня', 'дней'],
-         час: ['час', 'часа', 'часов'],
-         минута: ['минута', 'минуты', 'минут'],
-         секунда: ['секунда', 'секунды', 'секунд'],
-      };
-
-      if (!cases[word]) return `${count} ${word} назад`;
-
-      if (count % 10 === 1 && count % 100 !== 11) {
-         return `${count} ${cases[word][0]} назад`;
-      } else if (
-         count % 10 >= 2 &&
-         count % 10 <= 4 &&
-         (count % 100 < 10 || count % 100 >= 20)
-      ) {
-         return `${count} ${cases[word][1]} назад`;
+      if (dateDifference < 3600000) {
+         result = Math.floor(dateDifference / 60000);
+         return `${result} мин назад`;
+      } else if (dateDifference < 86400000) {
+         result = Math.floor(dateDifference / 3600000);
+         return `${result} ч назад`;
       } else {
-         return `${count} ${cases[word][2]} назад`;
+         result = Math.floor(dateDifference / 86400000);
+
+         const lastNumber = Number(result.toString().at(-1));
+         const lastTwoNumbers = result % 100;
+
+         if (lastTwoNumbers >= 11 && lastTwoNumbers <= 14) {
+            return `${result} дней назад`;
+         } else if (lastNumber === 1) {
+            return `${result} день назад`;
+         } else if (lastNumber >= 2 && lastNumber <= 4) {
+            return `${result} дня назад`;
+         } else {
+            return `${result} дней назад`;
+         }
       }
    }
 }

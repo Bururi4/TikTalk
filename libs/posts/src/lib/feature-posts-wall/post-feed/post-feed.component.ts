@@ -5,14 +5,25 @@ import {
    ElementRef,
    HostListener,
    inject,
+   input,
    Input,
-   Renderer2,
+   OnInit,
+   Renderer2, Signal
 } from '@angular/core';
-import { PostService, GlobalStoreService } from '@tt/data-access';
-import { firstValueFrom } from 'rxjs';
+import {
+   GlobalStoreService,
+   Post,
+   PostCreateDto,
+   Profile,
+} from '@tt/data-access';
+import { fromEvent, throttleTime } from 'rxjs';
 import { PostInputComponent } from '../../ui';
 import { Optimization } from '@tt/shared';
 import { PostComponent } from '../post/post.component';
+import { Store } from '@ngrx/store';
+import { postActions, selectPosts } from '../../data';
+import { NgFor } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
    selector: 'app-post-feed',
@@ -21,30 +32,38 @@ import { PostComponent } from '../post/post.component';
    templateUrl: './post-feed.component.html',
    styleUrl: './post-feed.component.scss',
 })
-export class PostFeedComponent implements AfterViewInit {
-   postService = inject(PostService);
+export class PostFeedComponent implements OnInit, AfterViewInit {
+   @Input() profile!: Profile;
+   me = input<Profile>();
    hostElement = inject(ElementRef);
    r2 = inject(Renderer2);
-   feed = inject(PostService).posts;
    destroyRef = inject(DestroyRef);
-   profile = inject(GlobalStoreService).me;
+   // profile = inject(GlobalStoreService).me;
+   post = input<Post>();
+   store = inject(Store);
+   feed: Signal<Post[] | []> = this.store.selectSignal(selectPosts);
+
    @Input() isCommentInput = false;
    @Input() postId = 0;
 
    @HostListener('window:resize')
    @Optimization(200)
    onWindowResize() {
-      console.log(123);
       this.resizeFeed();
    }
 
-   constructor() {
-      firstValueFrom(this.postService.fetchPosts());
+   ngOnInit() {
+      this.store.dispatch(postActions.fetchPosts({}));
    }
 
    ngAfterViewInit() {
       this.resizeFeed();
-      // this.resizeOptimization();
+
+      fromEvent(window, 'resize')
+         .pipe(throttleTime(200), takeUntilDestroyed(this.destroyRef))
+         .subscribe(() => {
+            this.resizeFeed();
+         });
    }
 
    resizeFeed() {
@@ -53,26 +72,7 @@ export class PostFeedComponent implements AfterViewInit {
       this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
    }
 
-   // resizeOptimization() {
-   //    fromEvent(window, 'resize')
-   //       .pipe(throttleTime(200), takeUntilDestroyed(this.destroyRef))
-   //       .subscribe(() => {
-   //          console.log(123);
-   //          this.resizeFeed();
-   //       })
-   // }
-
-   onCreatedPost(postText: string) {
-      if (!postText) return;
-
-      firstValueFrom(
-         this.postService.createPost({
-            title: 'Клевый пост',
-            content: postText,
-            authorId: this.profile()!.id,
-         })
-      ).then(() => {
-         postText = '';
-      });
+   postCreated(post: PostCreateDto) {
+      this.store.dispatch(postActions.createPost({ post }));
    }
 }
