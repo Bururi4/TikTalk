@@ -1,8 +1,14 @@
-import { Component, inject } from '@angular/core';
+import {
+   AfterViewInit,
+   Component,
+   ElementRef,
+   inject,
+   Renderer2,
+} from '@angular/core';
 import { ChatWorkspaceHeaderComponent } from './chat-workspace-header/chat-workspace-header.component';
 import { ChatWorkspaceMessagesWrapperComponent } from './chat-workspace-messages-wrapper/chat-workspace-messages-wrapper.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, of, switchMap } from 'rxjs';
+import { debounceTime, filter, fromEvent, of, switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ChatsService } from '@tt/data-access';
 
@@ -17,10 +23,12 @@ import { ChatsService } from '@tt/data-access';
    templateUrl: './chat-workspace.component.html',
    styleUrl: './chat-workspace.component.scss',
 })
-export class ChatWorkspaceComponent {
+export class ChatWorkspaceComponent implements AfterViewInit {
    route = inject(ActivatedRoute);
    router = inject(Router);
    chatsService = inject(ChatsService);
+   hostElement = inject(ElementRef);
+   r2 = inject(Renderer2);
 
    activeChat$ = this.route.params.pipe(
       switchMap(({ id }) => {
@@ -40,4 +48,21 @@ export class ChatWorkspaceComponent {
          return this.chatsService.getChatById(id);
       })
    );
+
+   ngAfterViewInit(): void {
+      this.resizeFeed();
+
+      fromEvent(window, 'resize')
+         .pipe(debounceTime(200))
+         .subscribe(() => {
+            this.resizeFeed();
+         });
+   }
+
+   resizeFeed() {
+      const { top } = this.hostElement.nativeElement.getBoundingClientRect();
+
+      const height = window.innerHeight - top - 24;
+      this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
+   }
 }
