@@ -1,8 +1,8 @@
 @if (profile$ | async; as profile) {
    <header class="profile-page-header">
-      <profile-header [profile]="profile" class="profile-page-header-body"></profile-header>
+      <app-profile-header class="profile-page-header-body" [profile]="profile"></app-profile-header>
 
-      @if (isMyPage()) {
+      @if (myPage()) {
          <div class="profile-btn">
             <a class="btn to-setting-btn" [routerLink]="['/settings']">
                Редактировать
@@ -24,7 +24,7 @@
       <div class="profile-page-sidebar">
          <h3 class="h6 mb16">Подписчики</h3>
          <div class="subscribers-wrapper mb32">
-            @for (subscriber of subscribers$ | async; track subscriber.id) {
+            @for (subscriber of subsShortlist(); track subscriber.id) {
                <a
                   class="subscriber-avatar-btn"
                   [routerLink]="['/profile', subscriber.id]"

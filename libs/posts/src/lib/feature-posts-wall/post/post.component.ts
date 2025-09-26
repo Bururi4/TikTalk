@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input} from '@angular/core';
 import {
    Post,
    PostComment,
@@ -28,7 +28,6 @@ import { DatePipe } from '@angular/common';
 export class PostComponent {
    post = input<Post>();
    comments = input<PostComment[]>();
-   // comments = signal<PostComment[]>([]);
    profile = inject(GlobalStoreService).me;
    me = input<Profile>();
    store = inject(Store);

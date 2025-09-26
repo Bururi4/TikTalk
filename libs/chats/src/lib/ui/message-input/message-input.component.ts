@@ -1,36 +1,35 @@
 import {
+   ChangeDetectionStrategy,
    Component,
-   EventEmitter,
-   HostBinding,
-   inject,
-   Input,
-   input,
+   EventEmitter, HostBinding,
+   inject, Input, input,
    Output,
-   Renderer2,
+   Renderer2
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
-import {
-   CommentCreateDto,
-   PostCreateDto, Profile,
-   ProfileService
-} from '@tt/data-access';
+import { FormsModule } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { selectMeProfile } from '@tt/profile';
+import { CommentCreateDto, PostCreateDto, ProfileService } from '@tt/data-access';
 
 @Component({
-   selector: 'app-post-input',
+   imports: [AvatarCircleComponent, FormsModule, SvgComponent],
    standalone: true,
-   imports: [AvatarCircleComponent, SvgComponent, FormsModule],
-   templateUrl: './post-input.component.html',
-   styleUrl: './post-input.component.scss',
+   selector: 'app-message-input',
+   styleUrl: './message-input.component.scss',
+   templateUrl: './message-input.component.html',
+   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostInputComponent {
+export class MessageInputComponent {
    r2 = inject(Renderer2);
    postText = '';
    isCommentInput = input(false);
    postId = input<number>(0);
    profileService = inject(ProfileService);
    profile = this.profileService.me;
-   me = input<Profile>();
+   store = inject(Store);
+   me = this.store.selectSignal(selectMeProfile)();
+   @Output() createdMessage = new EventEmitter<string>();
 
    @Input() placeholder = 'Напишите что-нибудь';
    @Output() createdPost = new EventEmitter<PostCreateDto>();
@@ -49,22 +48,7 @@ export class PostInputComponent {
 
    sendPost() {
       if (!this.postText) return;
-
-      if (this.isCommentInput()) {
-         this.createdComment.emit({
-            text: this.postText,
-            authorId: this.profile()!.id,
-            postId: this.postId(),
-         });
-         this.postText = '';
-         return;
-      }
-
-      this.createdPost.emit({
-         title: 'post',
-         content: this.postText,
-         authorId: this.profile()!.id,
-      });
+      this.createdMessage.emit(this.postText);
       this.postText = '';
       return;
    }

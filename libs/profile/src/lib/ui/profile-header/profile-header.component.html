@@ -1,10 +1,10 @@
 @if (profile(); as profile) {
-<app-avatar-circle [avatarUrl]="profile.avatarUrl" class="profile-header-circle-avatar"></app-avatar-circle>
+   <app-avatar-circle class="profile-header-circle-avatar" [avatarUrl]="profile.avatarUrl"></app-avatar-circle>
 
-<div class="firstname-and-username">
-   <h1 class="h4 profile-name">
-      {{ profile.firstName }} {{ profile.lastName }}
-   </h1>
-   <span class="regular-text">{{ profile.username }}</span>
-</div>
+   <div class="firstname-and-username">
+      <h1 class="h4 profile-name">
+         {{ profile.firstName }} {{ profile.lastName }}
+      </h1>
+      <span class="regular-text">{{ profile.username }}</span>
+   </div>
 }

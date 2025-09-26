@@ -1,14 +1,20 @@
-import { Component, effect, ViewChild } from '@angular/core';
+import {
+   Component,
+   effect,
+   inject,
+   ViewChild,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { SvgComponent } from '@tt/common-ui';
 import { StackInputComponent } from '@tt/chats';
 import { AvatarUploadComponent } from '../../ui/avatar-upload/avatar-upload.component';
 import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
 import { ProfileService } from '@tt/data-access';
+import { Store } from '@ngrx/store';
+import { selectMeProfile } from '../../data/store/selectors';
+import { profileActions } from '../../data/store/actions';
 
 @Component({
    selector: 'app-settings-page',
@@ -18,26 +24,24 @@ import { ProfileService } from '@tt/data-access';
       ReactiveFormsModule,
       AvatarUploadComponent,
       SvgComponent,
-      AsyncPipe,
       StackInputComponent,
       RouterModule,
    ],
    templateUrl: './settings-page.component.html',
-   styleUrl: './settings-page.component.scss',
+   styleUrl: './settings-page.component.scss'
 })
 export class SettingsPageComponent {
-   constructor(
-      private fb: FormBuilder,
-      private profileService: ProfileService,
-      private activatedRoute: ActivatedRoute
-   ) {
+   fb = inject(FormBuilder);
+   profileService = inject(ProfileService);
+   store = inject(Store);
+   profile = this.store.selectSignal(selectMeProfile);
+
+   constructor() {
       effect(() => {
          //@ts-ignore
-         this.form.patchValue({ ...this.profileService.me() });
+         this.form.patchValue({ ...this.profile() });
       });
    }
-
-   profile$ = toObservable(this.profileService.me);
 
    @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
@@ -67,6 +71,8 @@ export class SettingsPageComponent {
             ...this.form.value,
          })
       );
+
+      this.store.dispatch(profileActions.getMyProfile());
    }
 
    clearForm() {

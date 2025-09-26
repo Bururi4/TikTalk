@@ -1,12 +1,22 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+   Component,
+   inject,
+   OnInit,
+   signal,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
-import { toObservable } from '@angular/core/rxjs-interop';
 import { AsyncPipe } from '@angular/common';
 import { ImgUrlPipe, SvgComponent } from '@tt/common-ui';
-import { PostFeedComponent } from '@tt/posts';
-import { ChatsService, ProfileService } from '@tt/data-access';
+import { postActions, PostFeedComponent } from '@tt/posts';
 import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
+import { Store } from '@ngrx/store';
+import {
+   profileActions,
+   selectMeProfile,
+   selectProfileId,
+   selectSubscribersShortlist,
+} from '../../data/store';
 
 @Component({
    selector: 'app-profile-page',
@@ -20,28 +30,39 @@ import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.c
       PostFeedComponent,
    ],
    templateUrl: './profile-page.component.html',
-   styleUrl: './profile-page.component.scss',
+   styleUrl: './profile-page.component.scss'
 })
-export class ProfilePageComponent {
-   profileService = inject(ProfileService);
+export class ProfilePageComponent implements OnInit {
    activatedRoute = inject(ActivatedRoute);
-   chatsService = inject(ChatsService);
    router = inject(Router);
+   store = inject(Store);
+   subsShortlist = this.store.selectSignal(selectSubscribersShortlist);
+   myPage = signal(false);
+   me = this.store.selectSignal(selectMeProfile);
 
-   me$ = toObservable(this.profileService.me);
-   subscribers$ = this.profileService.getSubscribersShortList(6);
-   isMyPage = signal(false);
+   ngOnInit() {
+      this.store.dispatch(
+         profileActions.getSubscribersShortlist({ amount: 5 })
+      );
+   }
 
    profile$ = this.activatedRoute.params.pipe(
       switchMap(({ id }) => {
-         this.isMyPage.set(id === 'me' || id === this.profileService.me()?.id);
-         if (id === 'me') return this.me$;
+         if (id === 'me') {
+            this.myPage.set(id === 'me' || id === this.me()?.id);
+            this.store.dispatch(postActions.getMyPosts());
 
-         return this.profileService.getAccount(id);
+            return this.store.select(selectMeProfile);
+         } else {
+            this.store.dispatch(profileActions.getAccountId({ id: id }));
+            this.store.dispatch(postActions.getPosts({ userId: id }));
+
+            return this.store.select(selectProfileId);
+         }
       })
    );
 
    async sendMessage(userId: number) {
-      this.router.navigate(['/chats', 'new'], {queryParams: {userId}});
+      this.router.navigate(['/chats', 'new'], { queryParams: { userId } });
    }
 }

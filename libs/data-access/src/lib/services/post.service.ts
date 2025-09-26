@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import {
    CommentCreateDto,
    Post,
-   PostComment,
    PostCreateDto,
 } from '../interfaces/post.interface';
-import { map, switchMap } from 'rxjs';
+import { Comment } from '@angular/compiler';
+import { switchMap } from 'rxjs';
 import { environment } from '@tt/common-ui';
 
 @Injectable({
@@ -17,37 +17,31 @@ export class PostService {
 
    constructor(private http: HttpClient) {}
 
-   createPost(payload: PostCreateDto) {
-      return this.http.post<Post>(`${environment.url}post/`, payload).pipe(
+   createPost(post: PostCreateDto) {
+      return this.http.post<Post>(`${environment.url}post/`, post).pipe(
          switchMap(() => {
-            return this.fetchPosts();
+            return this.fetchPost();
          })
       );
    }
 
-   getPostsByUser(userId: number) {
+   fetchPost() {
+      return this.http.get<Post[]>(`${environment.url}post/`);
+   }
+
+   getPostsByUserId(userId: number) {
       return this.http.get<Post[]>(`${environment.url}post/`, {
          params: { user_id: userId },
       });
    }
 
-   fetchPosts() {
-      return this.http.get<Post[]>(`${environment.url}post/`);
-   }
-
-   createComment(payload: CommentCreateDto) {
+   createComment(comment: CommentCreateDto) {
       return this.http
-         .post<PostComment>(`${environment.url}comment/`, payload)
+         .post<Comment>(`${environment.url}comment/`, comment)
          .pipe(
             switchMap(() => {
-               return this.fetchPosts();
+               return this.fetchPost();
             })
          );
-   }
-
-   getCommentByPostId(postId: number) {
-      return this.http
-         .get<Post>(`${environment.url}post/${postId}`)
-         .pipe(map((res) => res.comments));
    }
 }

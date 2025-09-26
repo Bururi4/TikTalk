@@ -22,12 +22,16 @@ import {
 } from 'rxjs';
 import { DateTime } from 'luxon';
 import { KeyValuePipe } from '@angular/common';
-import { PostInputComponent } from '@tt/posts';
+import { MessageInputComponent } from '../../../ui/message-input/message-input.component';
 
 @Component({
    selector: 'app-chat-workspace-messages-wrapper',
    standalone: true,
-   imports: [ChatWorkspaceMessageComponent, PostInputComponent, KeyValuePipe],
+   imports: [
+      ChatWorkspaceMessageComponent,
+      KeyValuePipe,
+      MessageInputComponent,
+   ],
    templateUrl: './chat-workspace-messages-wrapper.component.html',
    styleUrl: './chat-workspace-messages-wrapper.component.scss',
 })
@@ -70,7 +74,7 @@ export class ChatWorkspaceMessagesWrapperComponent
    }
 
    private messageRequest() {
-      timer(0, 3600000)
+      timer(0, 600000)
          .pipe(takeUntil(this.destroy$))
          .subscribe(async () => {
             await firstValueFrom(this.chatsService.getChatById(this.chat().id));

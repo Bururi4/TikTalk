@@ -10,10 +10,9 @@ export const postActions = createActionGroup({
    events: {
       'get posts': props<{ userId: number }>(),
       'get my posts': emptyProps(),
-      'fetch posts': props<{ page?: number }>(),
       'loading posts': props<{ posts: Post[] }>(),
       'create post': props<{ post: PostCreateDto }>(),
       'create comment': props<{ comment: CommentCreateDto }>(),
-      'get comments by postId': props<{ postId: number }>(),
+      // 'fetch posts': props<{ page?: number }>(),
    },
 });

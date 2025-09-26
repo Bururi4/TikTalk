@@ -11,15 +11,23 @@ export class PostEffects {
    postService = inject(PostService);
    actions$ = inject(Actions);
 
-   loadingPosts = createEffect(() => {
+   fetchPost = createEffect(() => {
       return this.actions$.pipe(
-         ofType(postActions.fetchPosts),
+         ofType(postActions.getPosts),
+         switchMap(({ userId }) => {
+            return this.postService.getPostsByUserId(userId);
+         }),
+         map((posts) => postActions.loadingPosts({ posts: posts }))
+      );
+   });
+
+   fetchMyPost = createEffect(() => {
+      return this.actions$.pipe(
+         ofType(postActions.getMyPosts),
          switchMap(() => {
-            return this.postService.fetchPosts()
-               .pipe(
-                  map((posts) => postActions.loadingPosts({ posts: posts }))
-               );
-         })
+            return this.postService.fetchPost();
+         }),
+         map((posts) => postActions.loadingPosts({ posts: posts }))
       );
    });
 
@@ -42,24 +50,4 @@ export class PostEffects {
          map((posts) => postActions.loadingPosts({ posts: posts }))
       );
    });
-
-   // getPosts = createEffect(() => {
-   //    return this.actions$.pipe(
-   //       ofType(postActions.getPosts),
-   //       switchMap(({ userId }) => {
-   //          return this.postService.getPostsByUser(userId);
-   //       }),
-   //       map((posts) => postActions.loadingPosts({ posts: posts }))
-   //    );
-   // });
-   //
-   // getMyPosts = createEffect(() => {
-   //    return this.actions$.pipe(
-   //       ofType(postActions.getMyPosts),
-   //       switchMap(() => {
-   //          return this.postService.fetchPosts();
-   //       }),
-   //       map((posts) => postActions.loadingPosts({ posts: posts }))
-   //    );
-   // });
 }

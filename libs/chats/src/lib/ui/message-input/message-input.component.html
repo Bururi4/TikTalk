@@ -1,0 +1,16 @@
+<app-avatar-circle
+   class="size32"
+   [avatarUrl]="profile()!.avatarUrl">
+</app-avatar-circle>
+
+<textarea
+   [(ngModel)]="postText"
+   class="post-input-textarea"
+   type="text"
+   (input)="onTextAreaInput($event)"
+   [placeholder]="placeholder"
+></textarea>
+
+<button class="btn-icon" (click)="sendPost()">
+   <svg icon="send" class="svg14"></svg>
+</button>

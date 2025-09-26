@@ -7,22 +7,16 @@ import {
    inject,
    input,
    Input,
-   OnInit,
-   Renderer2, Signal
+   Renderer2,
+   Signal,
 } from '@angular/core';
-import {
-   GlobalStoreService,
-   Post,
-   PostCreateDto,
-   Profile,
-} from '@tt/data-access';
+import { Post, PostCreateDto, Profile } from '@tt/data-access';
 import { fromEvent, throttleTime } from 'rxjs';
 import { PostInputComponent } from '../../ui';
 import { Optimization } from '@tt/shared';
 import { PostComponent } from '../post/post.component';
 import { Store } from '@ngrx/store';
 import { postActions, selectPosts } from '../../data';
-import { NgFor } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -32,13 +26,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
    templateUrl: './post-feed.component.html',
    styleUrl: './post-feed.component.scss',
 })
-export class PostFeedComponent implements OnInit, AfterViewInit {
+export class PostFeedComponent implements AfterViewInit {
    @Input() profile!: Profile;
    me = input<Profile>();
    hostElement = inject(ElementRef);
    r2 = inject(Renderer2);
    destroyRef = inject(DestroyRef);
-   // profile = inject(GlobalStoreService).me;
    post = input<Post>();
    store = inject(Store);
    feed: Signal<Post[] | []> = this.store.selectSignal(selectPosts);
@@ -50,10 +43,6 @@ export class PostFeedComponent implements OnInit, AfterViewInit {
    @Optimization(200)
    onWindowResize() {
       this.resizeFeed();
-   }
-
-   ngOnInit() {
-      this.store.dispatch(postActions.fetchPosts({}));
    }
 
    ngAfterViewInit() {

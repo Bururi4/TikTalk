@@ -2,6 +2,8 @@
 
 <div class="profile-card__wrapper">
    @for (profile of profiles(); track profile.id) {
-   <app-profile-card [profile]="profile"></app-profile-card>
+      <a [routerLink]="['/profile', profile.id]">
+         <app-profile-card [profile]="profile"></app-profile-card>
+      </a>
    }
 </div>

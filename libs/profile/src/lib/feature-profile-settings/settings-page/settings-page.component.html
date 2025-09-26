@@ -1,6 +1,6 @@
 <div class="settings-preview">
-   @if (profile$ | async; as profile) {
-      <profile-header [profile]="profile" class="settings-preview-header"></profile-header>
+   @if (profile(); as profile) {
+      <app-profile-header [profile]="profile" class="settings-preview-header"></app-profile-header>
    }
 </div>
 
@@ -15,6 +15,7 @@
                formControlName="firstName"
             />
          </label>
+
          <label class="tt-form-label">
             <span class="tt-form-label-text">Фамилия</span>
             <input
@@ -29,6 +30,7 @@
          <span class="tt-form-label-text">Telegram username</span>
          <input type="text" class="tt-form-input" formControlName="username"/>
       </label>
+
       <label class="tt-form-label">
          <span class="tt-form-label-text">О себе</span>
          <textarea
@@ -38,19 +40,20 @@
          ></textarea>
       </label>
 
-      <label class="tt-form-label">
+      <label class="tt-form-label" for="avatar">
          <span class="tt-form-label-text">Аватарка</span>
-         <app-avatar-upload></app-avatar-upload>
+         <app-avatar-upload id="avatar"></app-avatar-upload>
       </label>
 
-      <label class="tt-form-label">
+      <label class="tt-form-label" for="stack">
          <span class="tt-form-label-text">Навыки</span>
-         <stack-input formControlName="stack"></stack-input>
+         <stack-input formControlName="stack" id="stack"></stack-input>
       </label>
    </div>
+
    <div class="action-buttons">
       <div>
-         <a class="delete-btn btn-white mr20" (click)="clearForm()">
+         <a class="delete-btn btn-white mr20" (mousedown)="clearForm()">
             <svg icon="delete"></svg>
          </a>
          <a class="exit-btn btn-white" [routerLink]="['/login']">
@@ -62,4 +65,5 @@
          <button class="btn save-button" (click)="onSave()">Сохранить</button>
       </div>
    </div>
+
 </form>
