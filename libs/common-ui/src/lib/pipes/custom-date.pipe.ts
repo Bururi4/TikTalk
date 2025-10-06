@@ -6,6 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CustomDatePipe implements PipeTransform {
    transform(value: string | null) {
+      if (value === null) return;
       const today = new Date(value + 'Z');
       const newDate = new Date();
       const dateDifference = newDate.getTime() - today.getTime();

@@ -8,6 +8,7 @@
    class="post-input-textarea"
    type="text"
    (input)="onTextAreaInput($event)"
+   (keydown)="onEnterKeydown($event)"
    [placeholder]="placeholder"
 ></textarea>
 

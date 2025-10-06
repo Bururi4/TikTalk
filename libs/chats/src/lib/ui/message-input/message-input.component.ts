@@ -1,16 +1,22 @@
 import {
    ChangeDetectionStrategy,
    Component,
-   EventEmitter, HostBinding,
-   inject, Input, input,
+   EventEmitter,
+   HostBinding,
+   inject,
+   Input,
+   input,
    Output,
-   Renderer2
+   Renderer2,
 } from '@angular/core';
 import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
 import { FormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { selectMeProfile } from '@tt/profile';
-import { CommentCreateDto, PostCreateDto, ProfileService } from '@tt/data-access';
+import {
+   CommentCreateDto,
+   PostCreateDto,
+   ProfileService,
+} from '@tt/data-access';
 
 @Component({
    imports: [AvatarCircleComponent, FormsModule, SvgComponent],
@@ -28,7 +34,6 @@ export class MessageInputComponent {
    profileService = inject(ProfileService);
    profile = this.profileService.me;
    store = inject(Store);
-   me = this.store.selectSignal(selectMeProfile)();
    @Output() createdMessage = new EventEmitter<string>();
 
    @Input() placeholder = 'Напишите что-нибудь';
@@ -44,6 +49,14 @@ export class MessageInputComponent {
       const textarea = event.target as HTMLTextAreaElement;
       this.r2.setStyle(textarea, 'height', 'auto');
       this.r2.setStyle(textarea, 'height', textarea.scrollHeight + 'px');
+   }
+
+   onEnterKeydown(event: KeyboardEvent) {
+      if (event.key === 'Enter') {
+         event.preventDefault();
+         event.stopPropagation();
+         this.sendPost();
+      }
    }
 
    sendPost() {

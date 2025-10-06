@@ -1,16 +1,18 @@
-<app-avatar-circle
-   class="size32"
-   [avatarUrl]="profile()!.avatarUrl">
-</app-avatar-circle>
+@if (profile(); as me) {
+   <app-avatar-circle
+      class="size32"
+      [avatarUrl]="me.avatarUrl">
+   </app-avatar-circle>
+}
 
-<textarea
-   [(ngModel)]="postText"
-   class="post-input-textarea"
-   type="text"
-   (input)="onTextAreaInput($event)"
-   [placeholder]="placeholder"
+<textarea [(ngModel)]="postText"
+          class="post-input-textarea"
+          type="text"
+          (input)="onTextAreaInput($event)"
+          (keydown)="onEnterKeydown($event)"
+          [placeholder]="placeholder"
 ></textarea>
 
-<button class="btn-icon" (click)="sendPost()">
+<button class="btn-icon" (click)="createPost()">
    <svg icon="send" class="svg14"></svg>
 </button>

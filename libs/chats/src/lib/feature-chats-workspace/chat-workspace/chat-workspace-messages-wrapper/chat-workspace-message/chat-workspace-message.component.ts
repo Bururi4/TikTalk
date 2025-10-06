@@ -13,8 +13,8 @@ import { AvatarCircleComponent } from '@tt/common-ui';
 export class ChatWorkspaceMessageComponent {
    message = input.required<Message>();
 
-   @HostBinding('class.is-mine')
-   get isMine() {
-      return this.message().isMine;
+   @HostBinding('class')
+   get isMine(): string {
+      return this.message().isMine ? 'is-mine' : '';
    }
 }

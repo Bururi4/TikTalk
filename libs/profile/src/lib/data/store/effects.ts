@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ProfileService } from '@tt/data-access';
+import { Pageable, Profile, ProfileService } from '@tt/data-access';
 import { profileActions } from './actions';
 import { map, switchMap, withLatestFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { selectPageableProfiles, selectFilters } from './selectors';
+import { selectedFilters, selectedPageableProfiles } from './selectors';
 
 @Injectable({
    providedIn: 'root',
@@ -16,18 +16,20 @@ export class ProfileEffects {
 
    filterProfiles = createEffect(() => {
       return this.actions$.pipe(
-         ofType(profileActions.filterEvents, profileActions.setPage),
-         withLatestFrom(
-            this.store.select(selectPageableProfiles),
-            this.store.select(selectFilters)
-         ),
-         switchMap(([_, filters, pageable]) => {
-            return this.profileService.filterProfiles({
-               ...pageable,
-               ...filters,
-            });
+         // ofType(profileActions.filterEvents),
+         // withLatestFrom(this.store.select(selectedPageableProfiles), this.store.select(selectedFilters)),
+         // switchMap(([_, filters, pageable]) => {
+         //    return this.profileService.filterProfiles({
+         //       ...pageable,
+         //       ...filters
+         //    });
+         // }),
+         // map((res: Pageable<Profile>) => profileActions.profilesLoaded({ profiles: res.items }))
+
+         switchMap(({ filters }) => {
+            return this.profileService.filterProfiles(filters);
          }),
-         map((res) => profileActions.profilesLoaded({ profiles: res.items }))
+         map((profile: Pageable<Profile>) => profileActions.profilesLoaded({ profiles: profile.items }))
       );
    });
 
@@ -37,7 +39,9 @@ export class ProfileEffects {
          switchMap(() => {
             return this.profileService.getMe();
          }),
-         map((profile) => profileActions.myProfileLoaded({ me: profile }))
+         map((profile: Profile) =>
+            profileActions.myProfileLoaded({ me: profile })
+         )
       );
    });
 
@@ -51,11 +55,11 @@ export class ProfileEffects {
       );
    });
 
-   getSubscribersShortList = createEffect(() => {
+   getSubscribersShortlist = createEffect(() => {
       return this.actions$.pipe(
          ofType(profileActions.getSubscribersShortlist),
          switchMap(({ amount }) => {
-            return this.profileService.getSubscribersShortList(amount);
+            return this.profileService.getSubscribersShortlist(amount);
          }),
          map((profile) => {
             return profileActions.subscribersShortlistLoaded({

@@ -1,6 +1,8 @@
-<img
-   [src]="profile.avatarUrl | imgUrl"
-   [alt]="profile.lastName"
-   class="subscriber-avatar"
-/>
-<strong class="subtitle">{{ profile.firstName }} {{ profile.lastName }}</strong>
+<a class="subscriber-avatar-wrapper" [routerLink]="['/profile', profile.id]">
+   <img
+      [src]="profile.avatarUrl | imgUrl"
+      [alt]="profile.lastName"
+      class="subscriber-avatar"
+   />
+   <strong class="subtitle">{{ profile.firstName }} {{ profile.lastName }}</strong>
+</a>

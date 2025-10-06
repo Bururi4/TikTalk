@@ -1,12 +1,13 @@
 import { createSelector } from '@ngrx/store';
 import { profileFeature } from './reducer';
+import { Profile } from '@tt/data-access';
 
-export const selectProfiles = createSelector(
+export const selectedProfiles = createSelector(
    profileFeature.selectProfiles,
    (profiles) => profiles
 );
 
-export const selectPageableProfiles = createSelector(
+export const selectedPageableProfiles = createSelector(
    profileFeature.selectProfileFeatureState,
    (state) => {
       return {
@@ -16,22 +17,22 @@ export const selectPageableProfiles = createSelector(
    }
 );
 
-export const selectFilters = createSelector(
+export const selectedFilters = createSelector(
    profileFeature.selectProfileFeatureState,
    (profileFilters) => profileFilters
 );
 
-export const selectMeProfile = createSelector(
+export const selectedMyProfile = createSelector(
    profileFeature.selectMe,
-   (me) => me
+   (me: Profile | null) => me
 );
 
-export const selectProfileId = createSelector(
+export const selectedProfileId = createSelector(
    profileFeature.selectProfileId,
-   (profileId) => profileId
+   (profileId: Profile | null) => profileId
 );
 
-export const selectSubscribersShortlist = createSelector(
+export const selectedSubscribersShortlist = createSelector(
    profileFeature.selectSubscribersShortlist,
    (subscribers) => {
       return subscribers;

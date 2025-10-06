@@ -1,2 +1,2 @@
-export * from './lib/layout/layout.component';
-export * from './lib/sidebar/sidebar.component';
+export * from './lib/layout';
+export * from './lib/sidebar';

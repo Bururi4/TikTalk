@@ -1,16 +1,18 @@
-import { Component, inject, input} from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
    Post,
    PostComment,
-   GlobalStoreService,
    CommentCreateDto,
    Profile,
 } from '@tt/data-access';
 import { PostInputComponent, CommentComponent } from '../../ui';
-import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
+import {
+   AvatarCircleComponent,
+   CustomDatePipe,
+   SvgComponent,
+} from '@tt/common-ui';
 import { Store } from '@ngrx/store';
 import { postActions } from '../../data';
-import { DatePipe } from '@angular/common';
 
 @Component({
    selector: 'app-post',
@@ -20,7 +22,7 @@ import { DatePipe } from '@angular/common';
       SvgComponent,
       PostInputComponent,
       CommentComponent,
-      DatePipe,
+      CustomDatePipe,
    ],
    templateUrl: './post.component.html',
    styleUrl: './post.component.scss',
@@ -28,7 +30,6 @@ import { DatePipe } from '@angular/common';
 export class PostComponent {
    post = input<Post>();
    comments = input<PostComment[]>();
-   profile = inject(GlobalStoreService).me;
    me = input<Profile>();
    store = inject(Store);
 

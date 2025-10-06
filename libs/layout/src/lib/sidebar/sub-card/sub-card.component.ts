@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { ImgUrlPipe } from '@tt/common-ui';
 import { Profile } from '@tt/data-access';
+import { RouterLink } from '@angular/router';
 
 @Component({
-   selector: 'sub-card',
+   selector: 'app-sub-card',
    standalone: true,
-   imports: [ImgUrlPipe],
+   imports: [ImgUrlPipe, RouterLink],
    templateUrl: './sub-card.component.html',
    styleUrl: './sub-card.component.scss',
 })

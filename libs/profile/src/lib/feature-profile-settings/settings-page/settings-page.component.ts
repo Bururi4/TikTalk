@@ -13,7 +13,7 @@ import { AvatarUploadComponent } from '../../ui/avatar-upload/avatar-upload.comp
 import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
 import { ProfileService } from '@tt/data-access';
 import { Store } from '@ngrx/store';
-import { selectMeProfile } from '../../data/store/selectors';
+import { selectedMyProfile } from '../../data/store/selectors';
 import { profileActions } from '../../data/store/actions';
 
 @Component({
@@ -34,7 +34,7 @@ export class SettingsPageComponent {
    fb = inject(FormBuilder);
    profileService = inject(ProfileService);
    store = inject(Store);
-   profile = this.store.selectSignal(selectMeProfile);
+   profile = this.store.selectSignal(selectedMyProfile);
 
    constructor() {
       effect(() => {

@@ -1,8 +1,8 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, startWith, Subscription } from 'rxjs';
+import { debounceTime, startWith } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { profileActions, selectFilters } from '../../data';
+import { profileActions, selectedFilters } from '../../data';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -16,7 +16,7 @@ export class ProfileFiltersComponent implements OnInit {
    fb = inject(FormBuilder);
    destroyRef = inject(DestroyRef);
    store = inject(Store);
-   selectedFilters = this.store.selectSignal(selectFilters);
+   selectedFilters = this.store.selectSignal(selectedFilters);
 
    searchForm = this.fb.group({
       firstName: [this.selectedFilters().profileFilters?.['firstName'] || ''],

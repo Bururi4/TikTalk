@@ -10,11 +10,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
-import {
-   CommentCreateDto,
-   PostCreateDto, Profile,
-   ProfileService
-} from '@tt/data-access';
+import { CommentCreateDto, PostCreateDto, Profile } from '@tt/data-access';
 
 @Component({
    selector: 'app-post-input',
@@ -24,22 +20,28 @@ import {
    styleUrl: './post-input.component.scss',
 })
 export class PostInputComponent {
-   r2 = inject(Renderer2);
-   postText = '';
+   profile = input<Profile>();
    isCommentInput = input(false);
    postId = input<number>(0);
-   profileService = inject(ProfileService);
-   profile = this.profileService.me;
-   me = input<Profile>();
+   r2 = inject(Renderer2);
+   postText = '';
 
    @Input() placeholder = 'Напишите что-нибудь';
    @Output() createdPost = new EventEmitter<PostCreateDto>();
    @Output() createdComment = new EventEmitter<CommentCreateDto>();
 
-   @HostBinding('class.comment')
+   @HostBinding('class')
    get isComment() {
-      return this.isCommentInput();
+      return { comment: this.isCommentInput() };
    }
+
+   // ngOnInit() {
+   //    console.log('Profile', this.profile());
+   // }
+   //
+   // ngOnChanges() {
+   //    console.log('Profile', this.profile());
+   // }
 
    onTextAreaInput(event: Event) {
       const textarea = event.target as HTMLTextAreaElement;
@@ -47,7 +49,15 @@ export class PostInputComponent {
       this.r2.setStyle(textarea, 'height', textarea.scrollHeight + 'px');
    }
 
-   sendPost() {
+   onEnterKeydown(event: KeyboardEvent) {
+      if (event.key === 'Enter') {
+         event.preventDefault();
+         event.stopPropagation();
+         this.createPost();
+      }
+   }
+
+   createPost() {
       if (!this.postText) return;
 
       if (this.isCommentInput()) {
@@ -56,15 +66,17 @@ export class PostInputComponent {
             authorId: this.profile()!.id,
             postId: this.postId(),
          });
+
          this.postText = '';
          return;
       }
 
       this.createdPost.emit({
-         title: 'post',
+         title: 'new post',
          content: this.postText,
          authorId: this.profile()!.id,
       });
+
       this.postText = '';
       return;
    }

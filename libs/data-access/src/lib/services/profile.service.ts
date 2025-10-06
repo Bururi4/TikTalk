@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { environment } from '@tt/common-ui';
 import { Pageable, Profile } from '../interfaces';
 import { GlobalStoreService } from './global-store.service';
@@ -13,13 +13,13 @@ export class ProfileService {
    #globalStoreService = inject(GlobalStoreService);
    http = inject(HttpClient);
 
-   getTestAccounts() {
+   getTestAccounts(): Observable<Profile[]> {
       return this.http.get<Profile[]>(
          `${environment.url}account/test_accounts`
       );
    }
 
-   getMe() {
+   getMe(): Observable<Profile> {
       return this.http.get<Profile>(`${environment.url}account/me`).pipe(
          tap((res) => {
             this.me.set(res);
@@ -28,21 +28,21 @@ export class ProfileService {
       );
    }
 
-   getAccount(id: string) {
+   getAccount(id: string): Observable<Profile> {
       return this.http.get<Profile>(`${environment.url}account/${id}`);
    }
 
-   getSubscribersShortList(subsAmount = 4) {
+   getSubscribersShortlist(subsAmount = 3): Observable<Profile[]> {
       return this.http
          .get<Pageable<Profile>>(`${environment.url}account/subscribers/`)
-         .pipe(map((response) => response.items.slice(1, subsAmount)));
+         .pipe(map((response) => response.items.slice(0, subsAmount)));
    }
 
-   patchProfile(profile: Partial<Profile>) {
+   patchProfile(profile: Partial<Profile>): Observable<Profile> {
       return this.http.patch<Profile>(`${environment.url}account/me`, profile);
    }
 
-   uploadAvatar(file: File) {
+   uploadAvatar(file: File): Observable<Profile[]> {
       const fd = new FormData();
       fd.append('image', file);
       return this.http.post<Profile[]>(
@@ -51,10 +51,8 @@ export class ProfileService {
       );
    }
 
-   filterProfiles(params: Record<string, any>) {
+   filterProfiles(params: Record<string, any>): Observable<Pageable<Profile>> {
       return this.http
-         .get<Pageable<Profile>>(`${environment.url}account/accounts`, {
-            params,
-         })
+         .get<Pageable<Profile>>(`${environment.url}account/accounts`, {params})
    }
 }

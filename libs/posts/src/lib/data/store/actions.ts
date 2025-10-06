@@ -1,9 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import {
-   CommentCreateDto,
-   Post,
-   PostCreateDto,
-} from '@tt/data-access';
+import { CommentCreateDto, Post, PostCreateDto } from '@tt/data-access';
 
 export const postActions = createActionGroup({
    source: 'post',
@@ -13,6 +9,5 @@ export const postActions = createActionGroup({
       'loading posts': props<{ posts: Post[] }>(),
       'create post': props<{ post: PostCreateDto }>(),
       'create comment': props<{ comment: CommentCreateDto }>(),
-      // 'fetch posts': props<{ page?: number }>(),
    },
 });

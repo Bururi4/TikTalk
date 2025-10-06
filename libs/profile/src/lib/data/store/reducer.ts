@@ -65,11 +65,10 @@ export const profileFeature = createFeature({
          };
       }),
 
-      on(profileActions.subscribersShortlistLoaded,
-         (state, { subscribers }) => {
+      on(profileActions.subscribersShortlistLoaded, (state, { subscribers }) => {
             return {
                ...state,
-               subscribersShortList: subscribers,
+               subscribersShortlist: subscribers,
             };
          }
       )
