@@ -16,9 +16,10 @@ export class ProfileEffects {
 
    filterProfiles = createEffect(() => {
       return this.actions$.pipe(
-         // ofType(profileActions.filterEvents),
+         ofType(profileActions.filterEvents),
+
          // withLatestFrom(this.store.select(selectedPageableProfiles), this.store.select(selectedFilters)),
-         // switchMap(([_, filters, pageable]) => {
+         // switchMap(([filters, pageable]) => {
          //    return this.profileService.filterProfiles({
          //       ...pageable,
          //       ...filters
@@ -27,6 +28,7 @@ export class ProfileEffects {
          // map((res: Pageable<Profile>) => profileActions.profilesLoaded({ profiles: res.items }))
 
          switchMap(({ filters }) => {
+
             return this.profileService.filterProfiles(filters);
          }),
          map((profile: Pageable<Profile>) => profileActions.profilesLoaded({ profiles: profile.items }))

@@ -82,9 +82,12 @@ export class ChatWorkspaceMessagesWrapperComponent
    }
 
    async onSendMessage(messageText: string) {
-      await firstValueFrom(
-         this.chatsService.sendMessage(this.chat().id, messageText)
-      );
+      // await firstValueFrom(
+      //    this.chatsService.sendMessage(this.chat().id, messageText)
+      // );
+
+      this.chatsService.wsAdapter.sendMessage(messageText, this.chat().id);
+
       await firstValueFrom(this.chatsService.getChatById(this.chat().id));
    }
 

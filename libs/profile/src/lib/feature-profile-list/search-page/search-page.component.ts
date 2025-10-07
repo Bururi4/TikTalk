@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ProfileCardComponent } from '../../ui/profile-card/profile-card.component';
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
 import { Store } from '@ngrx/store';
@@ -15,10 +15,4 @@ import { RouterLink } from '@angular/router';
 export class SearchPageComponent {
    store = inject(Store);
    profiles = this.store.selectSignal(selectedProfiles);
-
-   constructor() {
-      effect(() => {
-         console.log('Profiles updated:', this.profiles());
-      });
-   }
 }

@@ -15,7 +15,7 @@ export interface Message {
    text: string;
    createdAt: string;
    isRead: boolean;
-   updatedAt: string;
+   updatedAt?: string;
    user?: Profile;
    isMine?: boolean;
 }
@@ -24,6 +24,6 @@ export interface LastMessageRes {
    id: number;
    userFrom: Profile;
    message: string | null;
-   createdAt: string;
-   unreadMessages: number;
+   createdAt?: string;
+   unreadMessages?: number;
 }

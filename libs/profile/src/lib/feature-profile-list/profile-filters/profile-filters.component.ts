@@ -31,8 +31,10 @@ export class ProfileFiltersComponent implements OnInit {
             debounceTime(300),
             takeUntilDestroyed(this.destroyRef)
          )
-         .subscribe(formValue => {
-            this.store.dispatch(profileActions.filterEvents({ filters: formValue }));
+         .subscribe((formValue) => {
+            this.store.dispatch(
+               profileActions.filterEvents({ filters: formValue })
+            );
          });
    }
 }
