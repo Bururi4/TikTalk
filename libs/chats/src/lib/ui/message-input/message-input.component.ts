@@ -15,15 +15,15 @@ import { Store } from '@ngrx/store';
 import {
    CommentCreateDto,
    PostCreateDto,
-   ProfileService,
+   ProfileService, selectedMyProfile
 } from '@tt/data-access';
 
 @Component({
-   imports: [AvatarCircleComponent, FormsModule, SvgComponent],
-   standalone: true,
    selector: 'app-message-input',
-   styleUrl: './message-input.component.scss',
+   standalone: true,
+   imports: [FormsModule, AvatarCircleComponent, SvgComponent],
    templateUrl: './message-input.component.html',
+   styleUrl: './message-input.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageInputComponent {
@@ -34,6 +34,7 @@ export class MessageInputComponent {
    profileService = inject(ProfileService);
    profile = this.profileService.me;
    store = inject(Store);
+   me = this.store.selectSignal(selectedMyProfile)();
    @Output() createdMessage = new EventEmitter<string>();
 
    @Input() placeholder = 'Напишите что-нибудь';

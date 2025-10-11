@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { ImgUrlPipe } from '../../pipes';
+import { ImgUrlPipe } from '../../pipes/img-url.pipe';
 
 @Component({
    selector: 'app-avatar-circle',

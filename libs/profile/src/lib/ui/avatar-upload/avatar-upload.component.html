@@ -1,10 +1,10 @@
-@if (me(); as me) { @if (me.avatarUrl) {
-<img [src]="me.avatarUrl | imgUrl" alt="avatar" class="avatar" />
-} @else {
-<img [src]="preview()" alt="avatar" class="avatar" />
-} }
-
-<!--<img [src]="preview()" alt="avatar" class="avatar">-->
+@if (me(); as me) {
+   @if (me.avatarUrl) {
+      <img [src]="me.avatarUrl | imgUrl" alt="avatar" class="avatar"/>
+   } @else {
+      <img [src]="preview()" alt="avatar" class="avatar"/>
+   }
+}
 
 <div
    class="dropzone"
@@ -16,7 +16,7 @@
    <div class="dropzone-content">
       <svg icon="upload"></svg>
       <span class="medium-text dropzone-content-text"
-         >Перетащите изображение или
+      >Перетащите изображение или
          <span class="upload-text">Загрузите</span></span
       >
    </div>

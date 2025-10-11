@@ -1,11 +1,11 @@
-<div class="messages-wrapper">
-   @for (day of messagesByDay() | keyvalue; track day.key) {
-   <div class="day-of-message">
-      {{ day.key }}
-   </div>
-   @for (message of day.value; track message.id) {
-   <app-chat-workspace-message [message]="message"></app-chat-workspace-message>
-   } }
+<div class="messages-wrapper" #scrollToBottom>
+   @for (day of messagesByDay(); track $index) {
+      <app-group-by-date [messageDate]="day.date" class="message-group"></app-group-by-date>
+
+      @for (message of day.messages; track message.id) {
+         <app-chat-workspace-message [message]="message"></app-chat-workspace-message>
+      }
+   }
 </div>
 
 <app-message-input (createdMessage)="onSendMessage($event)"></app-message-input>

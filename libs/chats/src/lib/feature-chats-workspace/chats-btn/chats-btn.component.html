@@ -1,21 +1,26 @@
 @if (chat(); as chat) {
-<app-avatar-circle
-   [avatarUrl]="chat.userFrom.avatarUrl"
-   class="size32"
-></app-avatar-circle>
+   <app-avatar-circle
+      [avatarUrl]="chat.userFrom.avatarUrl"
+      class="size32"
+   ></app-avatar-circle>
 
-<div class="last-message-wrapper">
-   <div class="wrapper-first-row">
-      <div class="chat-user medium-text">
-         {{ chat.userFrom.firstName }} {{ chat.userFrom.lastName }}
+   <div class="last-message-wrapper">
+      <div class="wrapper-first-row">
+         <div class="chat-user medium-text">
+            {{ chat.userFrom.firstName }} {{ chat.userFrom.lastName }}
+         </div>
+         <div class="date-message medium-text">
+            {{ chat.createdAt | date : 'HH:mm dd.MM.YY' }}
+         </div>
       </div>
-      <div class="date-message medium-text">
-         {{ chat.createdAt | date : 'HH:mm dd.MM.YY' }}
+      <div class="wrapper-second-row">
+         <div class="medium-text">{{ chat.message }}</div>
+
+         @if (chat.unreadMessages) {
+            <div class="unread medium-text">{{ chat.unreadMessages }}</div>
+         } @else {
+            <div class="unread medium-text">0</div>
+         }
       </div>
    </div>
-   <div class="wrapper-second-row">
-      <div class="medium-text">{{ chat.message ?? '...' }}</div>
-      <div class="unread medium-text">{{ chat.unreadMessages }}</div>
-   </div>
-</div>
 }

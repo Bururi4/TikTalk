@@ -1,11 +1,11 @@
-import {Component, signal} from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
    FormControl,
    FormGroup,
    ReactiveFormsModule,
    Validators,
 } from '@angular/forms';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '@tt/data-access';
 
 @Component({
@@ -21,8 +21,7 @@ export class LoginPageComponent {
       password: new FormControl<string | null>('', Validators.required),
    });
 
-   constructor(private authService: AuthService, private router: Router) {
-   }
+   constructor(private authService: AuthService, private router: Router) {}
 
    onSubmit() {
       if (this.form.valid) {

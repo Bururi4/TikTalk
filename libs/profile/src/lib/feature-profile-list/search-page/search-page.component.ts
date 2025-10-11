@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ProfileCardComponent } from '../../ui/profile-card/profile-card.component';
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
 import { Store } from '@ngrx/store';
-import { selectedProfiles } from '../../data';
+import { selectedProfiles } from '@tt/data-access';
 import { RouterLink } from '@angular/router';
 
 @Component({

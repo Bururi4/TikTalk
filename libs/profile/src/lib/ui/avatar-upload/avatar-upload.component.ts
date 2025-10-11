@@ -1,7 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProfileService } from '@tt/data-access';
+import { selectedMyProfile } from '@tt/data-access';
 import { SvgComponent, DndDirective, ImgUrlPipe } from '@tt/common-ui';
+import { Store } from '@ngrx/store';
 
 @Component({
    selector: 'app-avatar-upload',
@@ -11,10 +12,9 @@ import { SvgComponent, DndDirective, ImgUrlPipe } from '@tt/common-ui';
    styleUrl: './avatar-upload.component.scss',
 })
 export class AvatarUploadComponent {
-   profileService = inject(ProfileService);
-
    preview = signal<string>('/assets/images/avatar-placeholder.png');
-   me = this.profileService.me;
+   store = inject(Store);
+   me = this.store.selectSignal(selectedMyProfile);
 
    avatar: File | null = null;
 

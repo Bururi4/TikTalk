@@ -4,15 +4,13 @@ import {
    PostComment,
    CommentCreateDto,
    Profile,
+   postActions,
 } from '@tt/data-access';
-import { PostInputComponent, CommentComponent } from '../../ui';
-import {
-   AvatarCircleComponent,
-   CustomDatePipe,
-   SvgComponent,
-} from '@tt/common-ui';
+import { PostInputComponent } from '../../ui/post-input/post-input.component';
+import { CommentComponent } from '../../ui/comment/comment.component';
+import { AvatarCircleComponent, SvgComponent } from '@tt/common-ui';
 import { Store } from '@ngrx/store';
-import { postActions } from '../../data';
+import { DatePipe } from '@angular/common';
 
 @Component({
    selector: 'app-post',
@@ -22,7 +20,7 @@ import { postActions } from '../../data';
       SvgComponent,
       PostInputComponent,
       CommentComponent,
-      CustomDatePipe,
+      DatePipe,
    ],
    templateUrl: './post.component.html',
    styleUrl: './post.component.scss',

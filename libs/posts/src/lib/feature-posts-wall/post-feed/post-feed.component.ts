@@ -6,14 +6,19 @@ import {
    input,
    Input,
    Renderer2,
-   Signal
+   Signal,
 } from '@angular/core';
-import { Post, PostCreateDto, Profile } from '@tt/data-access';
+import {
+   Post,
+   postActions,
+   PostCreateDto,
+   Profile,
+   selectPosts,
+} from '@tt/data-access';
 import { debounceTime, fromEvent } from 'rxjs';
-import { PostInputComponent } from '../../ui';
+import { PostInputComponent } from '../../ui/post-input/post-input.component';
 import { PostComponent } from '../post/post.component';
 import { Store } from '@ngrx/store';
-import { postActions, selectPosts } from '../../data';
 
 @Component({
    selector: 'app-post-feed',

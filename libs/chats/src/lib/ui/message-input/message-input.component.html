@@ -1,7 +1,9 @@
-<app-avatar-circle
-   class="size32"
-   [avatarUrl]="profile()!.avatarUrl">
-</app-avatar-circle>
+@if (me) {
+   <app-avatar-circle
+      class="size32"
+      [avatarUrl]="me.avatarUrl">
+   </app-avatar-circle>
+}
 
 <textarea
    [(ngModel)]="postText"

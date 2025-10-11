@@ -3,12 +3,14 @@ import { ChatsBtnComponent } from './chats-btn/chats-btn.component';
 import { ChatsListComponent } from './chats-list/chats-list.component';
 import { ChatsPageComponent } from './chats-page/chats-page.component';
 import { chatsRoutes } from './chats-page/chatsRoutes';
+import { GroupByDateComponent } from './group-by-date/group-by-date';
 
 export {
-   chatsRoutes,
    ChatWorkspaceComponent,
    ChatsBtnComponent,
    ChatsListComponent,
-   ChatsPageComponent
+   ChatsPageComponent,
+   chatsRoutes,
+   GroupByDateComponent
 }
 

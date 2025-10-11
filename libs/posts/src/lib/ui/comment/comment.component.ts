@@ -6,7 +6,7 @@ import { AvatarCircleComponent, CustomDatePipe } from '@tt/common-ui';
 @Component({
    selector: 'app-comment',
    standalone: true,
-   imports: [AvatarCircleComponent, DatePipe, CustomDatePipe],
+   imports: [AvatarCircleComponent, DatePipe],
    templateUrl: './comment.component.html',
    styleUrl: './comment.component.scss',
 })

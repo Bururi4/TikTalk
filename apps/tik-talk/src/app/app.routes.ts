@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 import { canActivateAuth, LoginPageComponent } from '@tt/auth';
 import {
-   ProfileEffects,
-   profileFeature,
    ProfilePageComponent,
    SearchPageComponent,
    SettingsPageComponent,
@@ -11,7 +9,12 @@ import { chatsRoutes } from '@tt/chats';
 import { LayoutComponent } from '@tt/layout';
 import { provideState } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { PostEffects, postFeature } from '@tt/posts';
+import {
+   PostEffects,
+   postFeature,
+   ProfileEffects,
+   profileFeature,
+} from '@tt/data-access';
 
 export const routes: Routes = [
    {

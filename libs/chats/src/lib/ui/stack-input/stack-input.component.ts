@@ -1,5 +1,14 @@
-import { Component, forwardRef, HostBinding, HostListener } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {
+   Component,
+   forwardRef,
+   HostBinding,
+   HostListener,
+} from '@angular/core';
+import {
+   ControlValueAccessor,
+   FormsModule,
+   NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { SvgComponent } from '@tt/common-ui';
@@ -7,7 +16,7 @@ import { SvgComponent } from '@tt/common-ui';
 @Component({
    selector: 'stack-input',
    standalone: true,
-   imports: [SvgComponent, FormsModule, AsyncPipe],
+   imports: [AsyncPipe, FormsModule, SvgComponent],
    templateUrl: './stack-input.component.html',
    styleUrl: './stack-input.component.scss',
    providers: [

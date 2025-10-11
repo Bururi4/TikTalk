@@ -1,20 +1,14 @@
-import {
-   Component,
-   effect,
-   inject,
-   ViewChild,
-} from '@angular/core';
+import { Component, effect, inject, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { SvgComponent } from '@tt/common-ui';
 import { StackInputComponent } from '@tt/chats';
-import { AvatarUploadComponent } from '../../ui/avatar-upload/avatar-upload.component';
 import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
+import { AvatarUploadComponent } from '../../ui/avatar-upload/avatar-upload.component';
 import { ProfileService } from '@tt/data-access';
 import { Store } from '@ngrx/store';
-import { selectedMyProfile } from '../../data/store/selectors';
-import { profileActions } from '../../data/store/actions';
+import { selectedMyProfile, profileActions } from '@tt/data-access';
 
 @Component({
    selector: 'app-settings-page',
@@ -28,7 +22,7 @@ import { profileActions } from '../../data/store/actions';
       RouterModule,
    ],
    templateUrl: './settings-page.component.html',
-   styleUrl: './settings-page.component.scss'
+   styleUrl: './settings-page.component.scss',
 })
 export class SettingsPageComponent {
    fb = inject(FormBuilder);

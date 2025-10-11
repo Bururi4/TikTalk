@@ -16,9 +16,9 @@ import { ChatsService } from '@tt/data-access';
    selector: 'app-chat-workspace',
    standalone: true,
    imports: [
+      AsyncPipe,
       ChatWorkspaceHeaderComponent,
       ChatWorkspaceMessagesWrapperComponent,
-      AsyncPipe,
    ],
    templateUrl: './chat-workspace.component.html',
    styleUrl: './chat-workspace.component.scss',
@@ -29,6 +29,7 @@ export class ChatWorkspaceComponent implements AfterViewInit {
    chatsService = inject(ChatsService);
    hostElement = inject(ElementRef);
    r2 = inject(Renderer2);
+   messages = this.chatsService.activeChatMessages;
 
    activeChat$ = this.route.params.pipe(
       switchMap(({ id }) => {

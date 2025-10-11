@@ -3,15 +3,16 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ImgUrlPipe, SvgComponent } from '@tt/common-ui';
-import { postActions, PostFeedComponent } from '@tt/posts';
+import { PostFeedComponent } from '@tt/posts';
 import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
 import { Store } from '@ngrx/store';
 import {
+   postActions,
    profileActions,
    selectedMyProfile,
    selectedProfileId,
    selectedSubscribersShortlist,
-} from '../../data/store';
+} from '@tt/data-access';
 
 @Component({
    selector: 'app-profile-page',
@@ -54,8 +55,9 @@ export class ProfilePageComponent implements OnInit {
       this.router.navigate(['/chats', 'new'], { queryParams: { userId } });
    }
 
-
    ngOnInit() {
-      this.store.dispatch(profileActions.getSubscribersShortlist({ amount: 5 }));
+      this.store.dispatch(
+         profileActions.getSubscribersShortlist({ amount: 5 })
+      );
    }
 }

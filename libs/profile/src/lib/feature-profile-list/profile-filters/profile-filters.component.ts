@@ -2,7 +2,7 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { profileActions, selectedFilters } from '../../data';
+import { profileActions, selectedFilters } from '@tt/data-access';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

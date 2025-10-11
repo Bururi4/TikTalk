@@ -2,63 +2,65 @@ import {
    AfterViewInit,
    Component,
    ElementRef,
+   EventEmitter,
    HostListener,
    inject,
+   Input,
    input,
-   OnDestroy,
-   OnInit,
+   OnChanges,
+   Output,
    Renderer2,
+   signal,
+   SimpleChanges,
+   ViewChild,
 } from '@angular/core';
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
 import { ChatsService } from '@tt/data-access';
 import { Chat, Message } from '@tt/data-access';
-import {
-   debounceTime,
-   firstValueFrom,
-   fromEvent,
-   Subject,
-   takeUntil,
-   timer,
-} from 'rxjs';
-import { DateTime } from 'luxon';
-import { KeyValuePipe } from '@angular/common';
+import { debounceTime, fromEvent, Subject, takeUntil } from 'rxjs';
 import { MessageInputComponent } from '../../../ui/message-input/message-input.component';
+import { GroupByDateComponent } from '../../group-by-date/group-by-date';
 
 @Component({
    selector: 'app-chat-workspace-messages-wrapper',
    standalone: true,
    imports: [
       ChatWorkspaceMessageComponent,
-      KeyValuePipe,
       MessageInputComponent,
+      GroupByDateComponent,
    ],
    templateUrl: './chat-workspace-messages-wrapper.component.html',
    styleUrl: './chat-workspace-messages-wrapper.component.scss',
 })
 export class ChatWorkspaceMessagesWrapperComponent
-   implements OnInit, AfterViewInit, OnDestroy
+   implements OnChanges, AfterViewInit
 {
    chatsService = inject(ChatsService);
    chat = input.required<Chat>();
-   messages = this.chatsService.activeChatMessages;
+   messagesByDay = signal<{ date: string; messages: Message[] }[]>([]);
    hostElement = inject(ElementRef);
    r2 = inject(Renderer2);
    destroy$ = new Subject<void>();
+
+   @Input() messages: Message[] = [];
+   @Output() sendMessage = new EventEmitter();
+   @ViewChild('scrollToBottom') scrollToBottom!: ElementRef;
 
    @HostListener('window:resize')
    onWindowResize() {
       this.resizeFeed();
    }
 
-   constructor() {
-      this.messageRequest();
-   }
+   ngOnChanges(changes: SimpleChanges) {
+      if (changes['messages']) {
+         this.messagesByDay.set(this.groupedMessages(this.messages));
+      }
 
-   ngOnInit() {
-      this.messagesByDay();
+      Promise.resolve().then(() => this.scrollBottom());
    }
 
    ngAfterViewInit() {
+      this.scrollBottom();
       this.resizeFeed();
 
       fromEvent(window, 'resize')
@@ -66,29 +68,28 @@ export class ChatWorkspaceMessagesWrapperComponent
          .subscribe(() => {
             this.resizeFeed();
          });
+
+      this.chatsService.deleteUnreadMessagesCount(this.chat().id);
    }
 
-   ngOnDestroy() {
-      this.destroy$.next();
-      this.destroy$.complete();
-   }
-
-   private messageRequest() {
-      timer(0, 600000)
-         .pipe(takeUntil(this.destroy$))
-         .subscribe(async () => {
-            await firstValueFrom(this.chatsService.getChatById(this.chat().id));
-         });
-   }
+   // private messageRequest() {
+   //    timer(0, 600000)
+   //       .pipe(takeUntil(this.destroy$))
+   //       .subscribe(async () => {
+   //          await firstValueFrom(this.chatsService.getChatById(this.chat().id));
+   //       });
+   // }
 
    async onSendMessage(messageText: string) {
-      // await firstValueFrom(
-      //    this.chatsService.sendMessage(this.chat().id, messageText)
-      // );
-
       this.chatsService.wsAdapter.sendMessage(messageText, this.chat().id);
+      this.scrollBottom();
+   }
 
-      await firstValueFrom(this.chatsService.getChatById(this.chat().id));
+   private scrollBottom() {
+      if (this.scrollToBottom) {
+         this.scrollToBottom.nativeElement.scrollTop =
+            this.scrollToBottom.nativeElement.scrollHeight;
+      }
    }
 
    resizeFeed() {
@@ -97,36 +98,24 @@ export class ChatWorkspaceMessagesWrapperComponent
       this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
    }
 
-   messagesByDay() {
-      const messagesStart = this.messages();
-      const messagesResult: { [key: string]: Message[] } = {};
+   groupedMessages(
+      messages: Message[]
+   ): { date: string; messages: Message[] }[] {
+      const result: { date: string; messages: Message[] }[] = [];
 
-      const today = DateTime.now().startOf('day');
-      const yesterday = today.minus({ days: 1 });
+      for (const message of messages) {
+         const date = message.createdAt.slice(0, 10);
+         const groupExist = result.find((group) => group.date === date);
 
-      messagesStart.forEach((message: Message) => {
-         const messageDate = DateTime.fromISO(message.createdAt, {
-            zone: 'utc',
-         })
-            .setZone(DateTime.local().zone)
-            .startOf('day');
-
-         let dateName: string;
-
-         if (messageDate.equals(today)) {
-            dateName = 'Сегодня';
-         } else if (messageDate.equals(yesterday)) {
-            dateName = 'Вчера';
+         if (groupExist) {
+            groupExist.messages.push(message);
          } else {
-            dateName = messageDate.toFormat('dd.MM.yyyy');
+            result.push({
+               date,
+               messages: [message],
+            });
          }
-
-         if (!messagesResult[dateName]) {
-            messagesResult[dateName] = [];
-         }
-         messagesResult[dateName].push(message);
-      });
-
-      return messagesResult;
+      }
+      return result;
    }
 }
