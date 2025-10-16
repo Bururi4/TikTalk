@@ -1,12 +1,12 @@
 import {
-   AfterViewInit,
+   AfterViewInit, ChangeDetectionStrategy,
    Component,
    ElementRef,
    inject,
    input,
    Input,
    Renderer2,
-   Signal,
+   Signal
 } from '@angular/core';
 import {
    Post,
@@ -26,6 +26,7 @@ import { Store } from '@ngrx/store';
    imports: [PostInputComponent, PostComponent],
    templateUrl: './post-feed.component.html',
    styleUrl: './post-feed.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostFeedComponent implements AfterViewInit {
    @Input() profile!: Profile;

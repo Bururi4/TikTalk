@@ -10,9 +10,11 @@
             </a>
          </div>
       } @else {
-         <button class="btn to-setting-btn" (click)="sendMessage(profile.id)" style="max-width: 150px;">
-            Написать
-         </button>
+         <div class="profile-btn">
+            <button class="btn to-setting-btn" (click)="sendMessage(profile.id)">
+               Написать
+            </button>
+         </div>
       }
    </header>
 
@@ -26,7 +28,7 @@
          <div class="subscribers-wrapper mb32">
             @for (subscriber of subscribers(); track subscriber.id) {
                <a class="subscriber-avatar-btn" [routerLink]="['/profile', subscriber.id]">
-                  <img [src]="subscriber.avatarUrl | imgUrl" [alt]="subscriber.username" class="subscriber-avatar"/>
+                  <img [src]="subscriber.avatarUrl | imgUrl" [alt]="subscriber.username" class="subscriber-avatar" />
                </a>
             }
 

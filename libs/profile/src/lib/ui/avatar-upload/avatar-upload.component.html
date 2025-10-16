@@ -9,7 +9,7 @@
 <div
    class="dropzone"
    tabindex="0"
-   (keyup.enter)="fileDrop.click()"
+   (click)="fileDrop.click()"
    (fileDropper)="onFileDropped($event)"
    dnd
 >
@@ -21,10 +21,10 @@
       >
    </div>
    <input
+      #fileDrop
       class="avatar-input"
       tabindex="-1"
       type="file"
       (change)="fileBrowserHandler($event)"
-      #fileDrop
    />
 </div>

@@ -1,4 +1,5 @@
 import {
+   ChangeDetectionStrategy,
    Component,
    forwardRef,
    HostBinding,
@@ -19,6 +20,7 @@ import { SvgComponent } from '@tt/common-ui';
    imports: [AsyncPipe, FormsModule, SvgComponent],
    templateUrl: './stack-input.component.html',
    styleUrl: './stack-input.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush,
    providers: [
       {
          provide: NG_VALUE_ACCESSOR,

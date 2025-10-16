@@ -1,4 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   Component,
+   inject,
+   signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { selectedMyProfile } from '@tt/data-access';
 import { SvgComponent, DndDirective, ImgUrlPipe } from '@tt/common-ui';
@@ -7,9 +12,10 @@ import { Store } from '@ngrx/store';
 @Component({
    selector: 'app-avatar-upload',
    standalone: true,
-   imports: [SvgComponent, DndDirective, FormsModule, ImgUrlPipe],
+   imports: [FormsModule, SvgComponent, DndDirective, ImgUrlPipe],
    templateUrl: './avatar-upload.component.html',
    styleUrl: './avatar-upload.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarUploadComponent {
    preview = signal<string>('/assets/images/avatar-placeholder.png');

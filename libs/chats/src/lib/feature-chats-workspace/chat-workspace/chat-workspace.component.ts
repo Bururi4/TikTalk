@@ -1,9 +1,9 @@
 import {
-   AfterViewInit,
+   AfterViewInit, ChangeDetectionStrategy,
    Component,
    ElementRef,
    inject,
-   Renderer2,
+   Renderer2
 } from '@angular/core';
 import { ChatWorkspaceHeaderComponent } from './chat-workspace-header/chat-workspace-header.component';
 import { ChatWorkspaceMessagesWrapperComponent } from './chat-workspace-messages-wrapper/chat-workspace-messages-wrapper.component';
@@ -22,6 +22,7 @@ import { ChatsService } from '@tt/data-access';
    ],
    templateUrl: './chat-workspace.component.html',
    styleUrl: './chat-workspace.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatWorkspaceComponent implements AfterViewInit {
    route = inject(ActivatedRoute);

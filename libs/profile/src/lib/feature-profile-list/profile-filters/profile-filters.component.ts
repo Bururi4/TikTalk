@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -11,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
    imports: [ReactiveFormsModule],
    templateUrl: './profile-filters.component.html',
    styleUrl: './profile-filters.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileFiltersComponent implements OnInit {
    fb = inject(FormBuilder);

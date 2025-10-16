@@ -1,4 +1,9 @@
-import { Component, inject, input } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   Component,
+   inject,
+   input,
+} from '@angular/core';
 import {
    Post,
    PostComment,
@@ -24,6 +29,7 @@ import { DatePipe } from '@angular/common';
    ],
    templateUrl: './post.component.html',
    styleUrl: './post.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent {
    post = input<Post>();

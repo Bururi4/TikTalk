@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -19,6 +19,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
    ],
    templateUrl: './chats-list.component.html',
    styleUrl: './chats-list.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatsListComponent {
    private chatsService = inject(ChatsService);

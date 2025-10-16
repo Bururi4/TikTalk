@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   Component,
+   inject,
+   OnInit,
+   signal,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
@@ -28,6 +34,7 @@ import {
    ],
    templateUrl: './profile-page.component.html',
    styleUrl: './profile-page.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePageComponent implements OnInit {
    activatedRoute = inject(ActivatedRoute);
@@ -56,8 +63,8 @@ export class ProfilePageComponent implements OnInit {
    }
 
    ngOnInit() {
-      this.store.dispatch(
-         profileActions.getSubscribersShortlist({ amount: 5 })
-      );
+      // this.store.dispatch(
+      //    profileActions.getSubscribersShortlist({ amount: 5 })
+      // );
    }
 }

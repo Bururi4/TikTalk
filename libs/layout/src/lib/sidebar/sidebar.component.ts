@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { SubCardComponent } from './sub-card/sub-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -29,6 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
    ],
    templateUrl: './sidebar.component.html',
    styleUrl: './sidebar.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
    store = inject(Store);

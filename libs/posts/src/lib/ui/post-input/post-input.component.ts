@@ -1,4 +1,5 @@
 import {
+   ChangeDetectionStrategy,
    Component,
    EventEmitter,
    HostBinding,
@@ -18,6 +19,7 @@ import { CommentCreateDto, PostCreateDto, Profile } from '@tt/data-access';
    imports: [AvatarCircleComponent, SvgComponent, FormsModule],
    templateUrl: './post-input.component.html',
    styleUrl: './post-input.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostInputComponent {
    profile = input<Profile>();

@@ -1,5 +1,5 @@
 import {
-   AfterViewInit,
+   AfterViewInit, ChangeDetectionStrategy,
    Component,
    ElementRef,
    EventEmitter,
@@ -12,7 +12,7 @@ import {
    Renderer2,
    signal,
    SimpleChanges,
-   ViewChild,
+   ViewChild
 } from '@angular/core';
 import { ChatWorkspaceMessageComponent } from './chat-workspace-message/chat-workspace-message.component';
 import { ChatsService } from '@tt/data-access';
@@ -31,6 +31,7 @@ import { GroupByDateComponent } from '../../group-by-date/group-by-date';
    ],
    templateUrl: './chat-workspace-messages-wrapper.component.html',
    styleUrl: './chat-workspace-messages-wrapper.component.scss',
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatWorkspaceMessagesWrapperComponent
    implements OnChanges, AfterViewInit
