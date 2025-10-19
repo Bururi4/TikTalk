@@ -1,0 +1,24 @@
+<tt-input
+   [formControl]="innerSearchControl"
+   [showSvg]="false"
+   type="text"
+   placeholder="Введите город"
+></tt-input>
+
+@if (suggestions$ | async; as suggestions) {
+   @if (showDropdown()) {
+      <div class="suggestion-dropdown">
+         @for (suggestion of suggestions; track suggestion) {
+            @if (suggestion) {
+               <button
+                  class="suggestion-button"
+                  (click)="onSuggestionChoose(suggestion)"
+               >{{ suggestion }}
+               </button>
+            }
+         }
+      </div>
+   }
+}
+
+

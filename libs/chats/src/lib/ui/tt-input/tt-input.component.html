@@ -1,0 +1,18 @@
+<label class="tt-control-label mb16">
+
+   <ng-content></ng-content>
+
+   <div class="form-input">
+      <input class="tt-input"
+             [type]="type()"
+             [placeholder]="placeholder()"
+             [value]="value"
+             (input)="onModelChange($event)"
+             (blur)="onTouched()"
+      />
+
+      @if (showSvg) {
+         <img src="/assets/svg/tg-icon.svg" alt="telegram" class="form-input-icon" />
+      }
+   </div>
+</label>
