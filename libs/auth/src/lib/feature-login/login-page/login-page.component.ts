@@ -7,11 +7,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@tt/data-access';
+import { TtInputComponent } from '@tt/chats';
 
 @Component({
    selector: 'app-login-page',
    standalone: true,
-   imports: [ReactiveFormsModule],
+   imports: [ReactiveFormsModule, TtInputComponent],
    templateUrl: './login-page.component.html',
    styleUrl: './login-page.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush,

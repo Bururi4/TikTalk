@@ -1,9 +1,17 @@
-<app-profile-filters></app-profile-filters>
+<app-profile-filters class="search-page-header"></app-profile-filters>
 
 <div class="profile-card__wrapper">
-   @for (profile of profiles(); track $index) {
+   @for (profile of profiles(); track $index; let last = $last) {
       <a [routerLink]="['/profile', profile.id]">
          <app-profile-card [profile]="profile"></app-profile-card>
       </a>
+
+      @if (last) {
+         @defer (on viewport) {
+            <tt-infinite-scroll-trigger (loaded)="timeToFetch()"></tt-infinite-scroll-trigger>
+         } @placeholder {
+            <div></div>
+         }
+      }
    }
 </div>

@@ -2,13 +2,17 @@
    display: grid;
    justify-items: center;
    grid-gap: 20px;
-}
-
-.profile-card__wrapper {
-
+   height: calc(100dvh - 48px);
+   overflow: scroll;
+   scrollbar-width: none;
 }
 
 a {
    all: unset;
    cursor: pointer;
+}
+
+.search-page-header {
+   position: sticky;
+   top: 0;
 }

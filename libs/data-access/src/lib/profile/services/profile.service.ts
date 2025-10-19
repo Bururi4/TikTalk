@@ -47,8 +47,9 @@ export class ProfileService {
 
    filterProfiles(params: Record<string, any>): Observable<Pageable<Profile>> {
       return this.http.get<Pageable<Profile>>(
-         `${environment.url}account/accounts`,
-         { params }
+         `${environment.url}account/accounts`, {
+            params,
+         }
       );
    }
 }

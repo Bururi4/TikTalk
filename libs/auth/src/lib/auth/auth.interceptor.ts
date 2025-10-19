@@ -20,6 +20,10 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
    const authService = inject(AuthService);
    const token = authService.accessToken;
 
+   if (req.url.includes('dadata.ru')) {
+      return next(req);
+   }
+
    if (!token) return next(req);
 
    if (isRefreshing$.value) {

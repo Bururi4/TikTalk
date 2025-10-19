@@ -18,7 +18,7 @@ export const profileInitialState: ProfileState = {
    me: null,
    profileId: null,
    subscribersShortlist: [],
-   page: 0,
+   page: 1,
    size: 10,
 };
 
@@ -29,7 +29,7 @@ export const profileFeature = createFeature({
       on(profileActions.profilesLoaded, (state, payload) => {
          return {
             ...state,
-            profiles: payload.profiles,
+            profiles: state.profiles.concat(payload.profiles),
          };
       }),
 
@@ -44,7 +44,9 @@ export const profileFeature = createFeature({
 
       on(profileActions.setPage, (state, payload) => {
          let page = payload.page;
+
          if (!page) page = state.page + 1;
+
          return {
             ...state,
             page,

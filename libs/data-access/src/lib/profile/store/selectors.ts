@@ -7,7 +7,7 @@ export const selectedProfiles = createSelector(
    (profiles) => profiles
 );
 
-export const selectedPageableProfiles = createSelector(
+export const selectProfilePageable = createSelector(
    profileFeature.selectProfileFeatureState,
    (state) => {
       return {
@@ -17,7 +17,7 @@ export const selectedPageableProfiles = createSelector(
    }
 );
 
-export const selectedFilters = createSelector(
+export const selectProfileFilters = createSelector(
    profileFeature.selectProfileFeatureState,
    (profileFilters) => profileFilters
 );

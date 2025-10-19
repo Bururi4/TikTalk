@@ -9,7 +9,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { RouterModule } from '@angular/router';
 import { SvgComponent } from '@tt/common-ui';
-import { StackInputComponent } from '@tt/chats';
+import { AddressInputComponent, StackInputComponent } from '@tt/chats';
 import { ProfileHeaderComponent } from '../../ui/profile-header/profile-header.component';
 import { AvatarUploadComponent } from '../../ui/avatar-upload/avatar-upload.component';
 import { ProfileService } from '@tt/data-access';
@@ -20,12 +20,13 @@ import { selectedMyProfile, profileActions } from '@tt/data-access';
    selector: 'app-settings-page',
    standalone: true,
    imports: [
-      ProfileHeaderComponent,
+      RouterModule,
       ReactiveFormsModule,
+      ProfileHeaderComponent,
       AvatarUploadComponent,
       SvgComponent,
       StackInputComponent,
-      RouterModule,
+      AddressInputComponent,
    ],
    templateUrl: './settings-page.component.html',
    styleUrl: './settings-page.component.scss',
@@ -52,6 +53,7 @@ export class SettingsPageComponent {
       username: [{ value: '', disabled: true }, Validators.required],
       description: [''],
       stack: [''],
+      city: [null],
    });
 
    onSave() {

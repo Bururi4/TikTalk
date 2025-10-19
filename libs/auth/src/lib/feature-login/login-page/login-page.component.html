@@ -1,22 +1,11 @@
 <div class="login-page">
    <form [formGroup]="form" class="login-form" (ngSubmit)="onSubmit()">
       <h1 class="h1 mb60">Вход</h1>
-      <label class="tt-control-label mb16">
+
+      <tt-input type="text" placeholder="Введите логин" formControlName="username">
          Telegram username
-         <div class="form-input">
-            <input
-               formControlName="username"
-               class="tt-input"
-               type="text"
-               placeholder="Введите логин"
-            />
-            <img
-               src="/assets/svg/tg-icon.svg"
-               alt="telegram"
-               class="form-input-icon"
-            />
-         </div>
-      </label>
+      </tt-input>
+
       <label class="tt-control-label mb32">
          Пароль
          <div class="form-input">
@@ -51,6 +40,6 @@
       <button type="submit" class="btn btn-shadow">Войти</button>
    </form>
    <div class="logo">
-      <img src="/assets/svg/login-logo.svg" alt="login"/>
+      <img src="/assets/svg/login-logo.svg" alt="login" />
    </div>
 </div>
